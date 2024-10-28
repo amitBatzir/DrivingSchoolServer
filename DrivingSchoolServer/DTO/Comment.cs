@@ -10,6 +10,7 @@ namespace DrivingSchoolServer.DTO
         public int TeacherId { get; set; }
         public string TheText { get; set; } = null!;
 
+        public Comment() { }
         public Comment(Models.Comment c)
         {
             CommentId = c.CommentId;

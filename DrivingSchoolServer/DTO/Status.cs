@@ -6,7 +6,7 @@ namespace DrivingSchoolServer.DTO
     {
         public int StatusId { get; set; }
         public string StatusDescription { get; set; } = null!;
-
+        public Status() { }
         public Status(Models.Status s)
         {
             StatusId = s.StatusId;

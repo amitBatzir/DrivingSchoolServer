@@ -28,7 +28,7 @@ namespace DrivingSchoolServer.DTO
         public string StudentAddress { get; set; } = null!;
         public string ProfilePic { get; set; } = null!;
         public int PackageId { get; set; }
-
+        public Student() { }
         public Student(Models.Student st)
         {
             UserStudentId = st.UserStudentId;

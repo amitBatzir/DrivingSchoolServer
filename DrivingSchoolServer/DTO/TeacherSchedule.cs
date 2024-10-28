@@ -12,7 +12,7 @@ namespace DrivingSchoolServer.DTO
         public string LessonLength { get; set; } = null!;
         public string Ending { get; set; } = null!;
         public int TeacherId { get; set; }
-
+        public TeacherSchedule() { }
         public TeacherSchedule(Models.TeacherSchedule ts)
         {
             ScheduleId = ts.ScheduleId;

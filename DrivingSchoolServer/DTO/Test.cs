@@ -12,6 +12,7 @@ namespace DrivingSchoolServer.DTO
         public DateTime DateOfTest { get; set; }
         public bool PassedOrNot { get; set; }
         public string Comments { get; set; } = null!;
+        public Test() { }
         public Test(Models.Test tst)
         {
             TestId = tst.TestId;

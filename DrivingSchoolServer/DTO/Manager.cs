@@ -16,6 +16,7 @@ namespace DrivingSchoolServer.DTO
         public string ManagerPhone { get; set; } = null!;
         public string SchoolPhone { get; set; } = null!;
 
+        public Manager() { }
         public Manager(Models.Manager m)
         {
             UserManagerId = m.UserManagerId;

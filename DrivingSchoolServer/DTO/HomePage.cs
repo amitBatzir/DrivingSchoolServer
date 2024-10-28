@@ -6,6 +6,7 @@ namespace DrivingSchoolServer.DTO
     {
         public string HomePageText { get; set; } = null!;
         public DateTime UpdateTime {  get; set;  }
+        public HomePage() { }
         public HomePage(Models.HomePage hm)
         {
             HomePageText = hm.HomePageText;

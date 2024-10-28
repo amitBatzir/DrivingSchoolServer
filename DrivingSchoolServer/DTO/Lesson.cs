@@ -12,7 +12,7 @@ namespace DrivingSchoolServer.DTO
         public string PickUpLoc { get; set; } = null!;
         public string DropOffLoc { get; set; } = null!;
         public bool DidExist { get; set; }
-
+        public Lesson() { }
         public Lesson(Models.Lesson l)
         {
             LessonId = l.LessonId;

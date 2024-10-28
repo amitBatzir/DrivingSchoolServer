@@ -10,6 +10,7 @@ namespace DrivingSchoolServer.DTO
         public string Title { get; set; } = null!;
         public string TheText { get; set; } = null!;
 
+        public Package() { }
         public Package(Models.Package p)
         {
             PackageId =p.PackageId;

@@ -19,7 +19,7 @@ namespace DrivingSchoolServer.DTO
         public string Gender { get; set; } = null!;
         public string ProfilePic { get; set; } = null!;
         public int ManagerId { get; set; }
-
+        public Teacher() { }
         public Teacher(Models.Teacher t)
         {
             UserTeacherId = t.UserTeacherId;
