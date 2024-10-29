@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DrivingSchoolServer.Models;
+using DrivingSchoolServer.DTO;
+namespace DrivingSchoolServer.Controllers;
+
 [Route("api")]
 [ApiController]
 public class DrivingSchoolAPIController : ControllerBase
@@ -30,20 +33,48 @@ public class DrivingSchoolAPIController : ControllerBase
             HttpContext.Session.Clear(); //Logout any previous login attempt
 
             //Get model user class from DB with matching email. 
-            Models.AppUser? modelsUser = context.GetUser(loginDto.Email);
-
-            //Check if user exist for this email and if password match, if not return Access Denied (Error 403) 
-            if (modelsUser == null || modelsUser.UserPassword != loginDto.Password)
+            if (loginDto.UserTypes == UserTypes.STUDENT)
             {
-                return Unauthorized();
+                Models.Student? modelsStudent = context.GetStudent(loginDto.Email);
+                //Check if user exist for this email and if password match, if not return Access Denied (Error 403) 
+                if (modelsStudent == null || modelsStudent.StudentPass != loginDto.Password)
+                {
+                    return Unauthorized();
+                }
+
+                //Login suceed! now mark login in session memory!
+                HttpContext.Session.SetString("loggedInStudent", modelsStudent.StudentEmail);
+                DTO.Student st = new DTO.Student(modelsStudent);
+                return Ok(st);
             }
+            if(loginDto.UserTypes == UserTypes.TEACHER)
+            {
+                Models.Teacher? modelsTeacher = context.GetTeacher(loginDto.Email);
+                if (modelsTeacher == null || modelsTeacher.TeacherPass != loginDto.Password)
+                {
+                    return Unauthorized();
+                }
+                HttpContext.Session.SetString("loggedInTeacher", modelsTeacher.TeacherEmail);
+                DTO.Teacher t = new DTO.Teacher(modelsTeacher);
+                return Ok(t);
+            }
+            if (loginDto.UserTypes == UserTypes.MANAGER)
+            {
+                Models.Manager? modelsManager = context.GetManager(loginDto.Email);
+                if (modelsManager == null || modelsManager.ManagerPass != loginDto.Password)
+                {
+                    return Unauthorized();
+                }
+                HttpContext.Session.SetString("loggedInManager", modelsManager.ManagerEmail);
+                DTO.Manager m = new DTO.Manager(modelsManager);
+                return Ok(m);
+            }
+            return Ok();
+            
 
-            //Login suceed! now mark login in session memory!
-            HttpContext.Session.SetString("loggedInUser", modelsUser.UserEmail);
+            
 
-            DTO.AppUser dtoUser = new DTO.AppUser(modelsUser);
-            dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
-            return Ok(dtoUser);
+            
         }
         catch (Exception ex)
         {

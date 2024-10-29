@@ -137,8 +137,8 @@ VALUES('Itzik', 'Rotem', 'Rotem@gmail.com', '123', 1, '217389065', 'Golda Meir',
 SELECT * FROM Manager
 
 -- Create a login for the admin user
---CREATE LOGIN [DrivingSchoolAdminLogin] WITH PASSWORD = 'thePassword';
---Go
+CREATE LOGIN [DrivingSchoolAdminLogin] WITH PASSWORD = 'thePassword';
+Go
 
 -- Create a user in the DrivingSchoolDB database for the login
 CREATE USER [DrivingSchoolAdminUser] FOR LOGIN [DrivingSchoolAdminLogin];
