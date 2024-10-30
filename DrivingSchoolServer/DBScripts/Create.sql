@@ -144,6 +144,8 @@ Go
 CREATE USER [DrivingSchoolAdminUser] FOR LOGIN [DrivingSchoolAdminLogin];
 Go
 
+Select * from  Manager;
+
 -- Add the user to the db_owner role to grant admin privileges
 ALTER ROLE db_owner ADD MEMBER [DrivingSchoolAdminUser];
 Go

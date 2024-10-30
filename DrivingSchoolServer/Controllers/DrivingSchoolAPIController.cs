@@ -69,11 +69,7 @@ public class DrivingSchoolAPIController : ControllerBase
                 DTO.Manager m = new DTO.Manager(modelsManager);
                 return Ok(m);
             }
-            return Ok();
-            
-
-            
-
+            return Ok();                
             
         }
         catch (Exception ex)
