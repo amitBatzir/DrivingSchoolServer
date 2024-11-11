@@ -7,6 +7,9 @@ namespace DrivingSchoolServer.Controllers;
 [ApiController]
 public class DrivingSchoolAPIController : ControllerBase
 {
+    //https://colorhunt.co/palette/008dda41c9e2ace2e1f7eedd צבעים לאפליקציה
+
+
     //a variable to hold a reference to the db context!
     private DrivingSchoolDbContext context;
     //a variable that hold a reference to web hosting interface (that provide information like the folder on which the server runs etc...)
