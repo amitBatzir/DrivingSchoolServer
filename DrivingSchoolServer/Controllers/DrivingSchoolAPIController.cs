@@ -79,7 +79,31 @@ public class DrivingSchoolAPIController : ControllerBase
         {
             return BadRequest(ex.Message);
         }
-
     }
+    //[HttpPost("register")]
+    //public IActionResult Register([FromBody] DTO.User userDto)
+    //{
+    //    try
+    //    {
+    //        HttpContext.Session.Clear(); //Logout any previous login attempt
+
+    //        //Create model user class
+    //        Models.AppUser modelsUser = userDto.GetModels();
+
+    //        context.AppUsers.Add(modelsUser);
+    //        context.SaveChanges();
+
+    //        //User was added!
+    //        DTO.AppUser dtoUser = new DTO.AppUser(modelsUser);
+    //        dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+    //        return Ok(dtoUser);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return BadRequest(ex.Message);
+    //    }
+
+    //}
+
 }
 
