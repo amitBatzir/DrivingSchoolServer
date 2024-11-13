@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DrivingSchoolServer.Models;
 using DrivingSchoolServer.DTO;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 namespace DrivingSchoolServer.Controllers;
 
 [Route("api")]
@@ -80,30 +81,75 @@ public class DrivingSchoolAPIController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-    //[HttpPost("register")]
-    //public IActionResult Register([FromBody] DTO.User userDto)
-    //{
-    //    try
-    //    {
-    //        HttpContext.Session.Clear(); //Logout any previous login attempt
+    [HttpPost("registerStudent")]
+    public IActionResult RegisterStudent([FromBody] DTO.Student StudentDto)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
 
-    //        //Create model user class
-    //        Models.AppUser modelsUser = userDto.GetModels();
+            //Create model user class
+            Models.Student modelsStudent = StudentDto.GetModel();
 
-    //        context.AppUsers.Add(modelsUser);
-    //        context.SaveChanges();
+            context.Students.Add(modelsStudent);
+            context.SaveChanges(); // מכניס לדאטא בייס
 
-    //        //User was added!
-    //        DTO.AppUser dtoUser = new DTO.AppUser(modelsUser);
-    //        dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
-    //        return Ok(dtoUser);
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        return BadRequest(ex.Message);
-    //    }
+            //User was added!
+            DTO.Student dtoStudent = new DTO.Student(modelsStudent);
+            //dtoStudent.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            return Ok(dtoStudent);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    [HttpPost("registerTeacher")]
+    public IActionResult RegisterTeacher([FromBody] DTO.Teacher TeacherDto)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
 
-    //}
+            //Create model user class
+            Models.Teacher modelsTeacher = TeacherDto.GetModel();
+
+            context.Teachers.Add(modelsTeacher);
+            context.SaveChanges(); // מכניס לדאטא בייס
+
+            //User was added!
+            DTO.Teacher dtoTeacher = new DTO.Teacher(modelsTeacher);
+            //dtoStudent.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            return Ok(dtoTeacher);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    [HttpPost("registerManager")]
+    public IActionResult RegisterManager([FromBody] DTO.Manager ManagerDto)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+            //Create model user class
+            Models.Manager modelsManager = ManagerDto.GetModel();
+
+            context.Managers.Add(modelsManager);
+            context.SaveChanges(); // מכניס לדאטא בייס
+
+            //User was added!
+            DTO.Manager dtoManager = new DTO.Manager(modelsManager);
+            //dtoStudent.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            return Ok(dtoManager);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 
 }
 
