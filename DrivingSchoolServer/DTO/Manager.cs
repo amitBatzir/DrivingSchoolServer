@@ -15,6 +15,7 @@ namespace DrivingSchoolServer.DTO
         public string SchoolAddress { get; set; } = null!;
         public string ManagerPhone { get; set; } = null!;
         public string SchoolPhone { get; set; } = null!;
+        public string SchoolName { get; set; } = null;
 
         public Manager() { }
         public Manager(Models.Manager m)
@@ -29,6 +30,7 @@ namespace DrivingSchoolServer.DTO
             SchoolAddress = m.SchoolAddress;
             ManagerPhone = m.ManagerPhone;
             SchoolPhone = m.SchoolPhone;
+            SchoolName = m.SchoolName;
         }
 
         public Models.Manager GetModel()
@@ -44,6 +46,7 @@ namespace DrivingSchoolServer.DTO
             m.SchoolAddress = SchoolAddress;
             m.ManagerPhone = ManagerPhone;
             m.SchoolPhone = SchoolPhone;
+            m.SchoolName = SchoolName;
             return m;
         }
 

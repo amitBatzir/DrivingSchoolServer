@@ -18,4 +18,9 @@ public partial class DrivingSchoolDbContext : DbContext
     {
         return this.Managers.Where(m => m.ManagerEmail == email).FirstOrDefault();
     }
+    public Manager? GetSchoolName(string schoolName)
+    {
+        return this.Managers.Where(m => m.SchoolName == schoolName).FirstOrDefault();
+
+    }
 }

@@ -19,6 +19,7 @@ StatusDescription nvarchar(50) Not Null,
 Create Table Manager
 (
 UserManagerID int Primary Key Identity(1,1),
+SchoolName nvarchar(50) Not Null,
 FirstName nvarchar(50) Not Null,
 LastName nvarchar(50) Not Null,
 ManagerEmail nvarchar(50) Unique Not Null,
@@ -131,9 +132,13 @@ UpdateTime Datetime Not Null,
 INSERT INTO Statuses(StatusDescription)
 VALUES('Approved')
 SELECT * FROM Statuses
+INSERT INTO Statuses(StatusDescription)
+VALUES('Pending')
+INSERT INTO Statuses(StatusDescription)
+VALUES('Declined')
 
-INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus, TeacherID, SchoolAddress,  ManagerPhone, SchoolPhone)
-VALUES('Itzik', 'Rotem', 'Rotem@gmail.com', '123', 1, '217389065', 'Golda Meir', '0537786549', '03456789')
+INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus, TeacherID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
+VALUES('Itzik', 'Rotem', 'Rotem@gmail.com', '123', 1, '217389065', 'Golda Meir', '0537786549', '03456789', 'Ramon')
 SELECT * FROM Manager
 
 -- Create a login for the admin user
@@ -145,6 +150,8 @@ CREATE USER [DrivingSchoolAdminUser] FOR LOGIN [DrivingSchoolAdminLogin];
 Go
 
 Select * from  Manager;
+Select * from  Statuses;
+
 
 -- Add the user to the db_owner role to grant admin privileges
 ALTER ROLE db_owner ADD MEMBER [DrivingSchoolAdminUser];

@@ -151,5 +151,28 @@ public class DrivingSchoolAPIController : ControllerBase
         }
     }
 
+    [HttpPost("CheckSchoolExist")]
+    public IActionResult CheckSchoolExist([FromBody] DTO.Manager managerDto)
+    {
+        try
+        {
+
+            if (managerDto.SchoolName != null)
+            {
+                Models.Manager? modelsManagerToCheck = context.GetSchoolName(managerDto.SchoolName);
+                if (modelsManagerToCheck == null)
+                {
+                    return Unauthorized();
+                }
+                return Ok();
+            }
+            return Unauthorized();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
 }
 
