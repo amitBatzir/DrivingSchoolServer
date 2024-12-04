@@ -27,8 +27,8 @@ ManagerPass nvarchar(50) Not Null,
 ManagerStatus int Not Null Foreign Key References Statuses(StatusID),
 TeacherID nvarchar(50) Not Null,
 SchoolAddress nvarchar(50) Not Null,
-ManagerPhone nvarchar(50) Not Null,
-SchoolPhone nvarchar(50) Not Null,
+ManagerPhone nvarchar(10) Not Null,
+SchoolPhone nvarchar(10) Not Null,
 )
 
 Create table Package
