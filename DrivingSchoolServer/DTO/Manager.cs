@@ -11,7 +11,7 @@ namespace DrivingSchoolServer.DTO
         public string ManagerEmail { get; set; } = null!;
         public string ManagerPass { get; set; } = null!;
         public int ManagerStatus { get; set; }
-        public string TeacherId { get; set; } = null!;
+        public string ManagerId { get; set; } = null!;
         public string SchoolAddress { get; set; } = null!;
         public string ManagerPhone { get; set; } = null!;
         public string SchoolPhone { get; set; } = null!;
@@ -26,7 +26,7 @@ namespace DrivingSchoolServer.DTO
             ManagerEmail = m.ManagerEmail;
             ManagerPass = m.ManagerPass;
             ManagerStatus = m.ManagerStatus;
-            TeacherId = m.TeacherId;
+            ManagerId = m.ManagerId;
             SchoolAddress = m.SchoolAddress;
             ManagerPhone = m.ManagerPhone;
             SchoolPhone = m.SchoolPhone;
@@ -42,7 +42,7 @@ namespace DrivingSchoolServer.DTO
             m.ManagerEmail = ManagerEmail;
             m.ManagerPass = ManagerPass;
             m.ManagerStatus = ManagerStatus;
-            m.TeacherId = TeacherId;
+            m.ManagerId = ManagerId;
             m.SchoolAddress = SchoolAddress;
             m.ManagerPhone = ManagerPhone;
             m.SchoolPhone = SchoolPhone;

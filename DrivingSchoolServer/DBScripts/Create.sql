@@ -25,7 +25,7 @@ LastName nvarchar(50) Not Null,
 ManagerEmail nvarchar(50) Unique Not Null,
 ManagerPass nvarchar(50) Not Null,
 ManagerStatus int Not Null Foreign Key References Statuses(StatusID),
-TeacherID nvarchar(50) Not Null,
+ManagerID nvarchar(50) Not Null,
 SchoolAddress nvarchar(50) Not Null,
 ManagerPhone nvarchar(10) Not Null,
 SchoolPhone nvarchar(10) Not Null,
@@ -130,10 +130,10 @@ UpdateTime Datetime Not Null,
 )
 
 INSERT INTO Statuses(StatusDescription)
-VALUES('Approved')
+VALUES('Pending')
 SELECT * FROM Statuses
 INSERT INTO Statuses(StatusDescription)
-VALUES('Pending')
+VALUES('Approved')
 INSERT INTO Statuses(StatusDescription)
 VALUES('Declined')
 

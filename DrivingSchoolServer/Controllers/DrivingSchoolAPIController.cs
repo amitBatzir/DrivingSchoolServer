@@ -127,6 +127,7 @@ public class DrivingSchoolAPIController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+    
     [HttpPost("registerManager")]
     public IActionResult RegisterManager([FromBody] DTO.Manager ManagerDto)
     {
@@ -150,6 +151,31 @@ public class DrivingSchoolAPIController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet("getSchools")]
+    public IActionResult GetSchools()
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+            //Get list of schools from DB
+            List <Models.Manager> managers = context.Managers.ToList();
+            List<DTO.Manager> dtoManagers = new List<DTO.Manager>();
+
+            foreach(Models.Manager m in managers)
+            {
+                dtoManagers.Add(new DTO.Manager(m));
+            }
+            return Ok(dtoManagers);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+
 
     //[HttpPost("CheckSchoolExist")]
     //public IActionResult CheckSchoolExist([FromBody] DTO.Manager managerDto)
