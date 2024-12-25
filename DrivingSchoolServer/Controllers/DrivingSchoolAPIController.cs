@@ -127,8 +127,8 @@ public class DrivingSchoolAPIController : ControllerBase
 
             //User was added!
             DTO.Teacher dtoTeacher = new DTO.Teacher(modelsTeacher);
-            //dtoStudent.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
-            return Ok(dtoTeacher);
+            dtoTeacher.ProfilePic = GetProfileImageVirtualPath(dtoTeacher.UserTeacherId);
+            return Ok(modelsTeacher);
         }
         catch (Exception ex)
         {
@@ -136,96 +136,238 @@ public class DrivingSchoolAPIController : ControllerBase
         }
     }
 
-    [HttpGet("getSchools")]
-    public IActionResult GetSchools()
+
+    #endregion
+
+    #region Manager
+    [HttpPost("registerManager")]
+    public IActionResult RegisterManager([FromBody] DTO.Manager ManagerDto)
     {
         try
         {
             HttpContext.Session.Clear(); //Logout any previous login attempt
 
-            //Get list of schools from DB
-            List<Models.Manager> managers = context.Managers.ToList();
-            List<DTO.Manager> dtoManagers = new List<DTO.Manager>();
+            //Create model user class
+            Models.Manager modelsManager = ManagerDto.GetModel();
 
-            foreach (Models.Manager m in managers)
-            {
-                dtoManagers.Add(new DTO.Manager(m));
-            }
-            return Ok(dtoManagers);
+            context.Managers.Add(modelsManager);
+            context.SaveChanges(); // מכניס לדאטא בייס
+
+            //User was added!
+            DTO.Manager dtoManager = new DTO.Manager(modelsManager);
+            //dtoStudent.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            return Ok(dtoManager);
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
     }
+    #endregion
+
+    #region Photo
 
     [HttpPost("UploadProfileImage")]
-    public async Task<IActionResult> UploadProfileImageAsync(IFormFile file)
+    public async Task<IActionResult> UploadProfileImageAsync(IFormFile file, [FromBody] DTO.LoginInfo loginDto)
     {
         //Check if who is logged in
-        string? teacherEmail = HttpContext.Session.GetString("loggedInTeacher");
-        if (string.IsNullOrEmpty(teacherEmail))
+        if (loginDto.UserTypes == UserTypes.STUDENT)
         {
-            return Unauthorized("המשתמש לא מחובר למערכת");
-        }
-
-        //Get model user class from DB with matching email. 
-        Models.Teacher? teacher = context.GetTeacher(teacherEmail);
-        //Clear the tracking of all objects to avoid double tracking
-        context.ChangeTracker.Clear();
-
-        if (teacher == null)
-        {
-            return Unauthorized("המשתמש לא נמצא בדאטא בייס");
-        }
-
-
-        //Read all files sent
-        long imagesSize = 0;
-
-        if (file.Length > 0)
-        {
-            //Check the file extention!
-            string[] allowedExtentions = { ".png", ".jpg" };
-            string extention = "";
-            if (file.FileName.LastIndexOf(".") > 0)
+            string? StudentEmail = HttpContext.Session.GetString("loggedInStudent");
+            if (string.IsNullOrEmpty(StudentEmail))
             {
-                extention = file.FileName.Substring(file.FileName.LastIndexOf(".")).ToLower();
-            }
-            if (!allowedExtentions.Where(e => e == extention).Any())
-            {
-                //Extention is not supported
-                return BadRequest("File sent with non supported extention");
+                return Unauthorized("המשתמש לא מחובר למערכת");
             }
 
-            //Build path in the web root (better to a specific folder under the web root
-            string filePath = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{teacher.TeacherId}{extention}";
+            //Get model user class from DB with matching email. 
+            Models.Student? student = context.GetStudent(StudentEmail);
+            //Clear the tracking of all objects to avoid double tracking
+            context.ChangeTracker.Clear();
 
-            using (var stream = System.IO.File.Create(filePath))
+            if (student == null)
             {
-                await file.CopyToAsync(stream);
+                return Unauthorized("המשתמש לא נמצא בדאטא בייס");
+            }
 
-                if (IsImage(stream))
+
+            //Read all files sent
+            long imagesSize = 0;
+
+            if (file.Length > 0)
+            {
+                //Check the file extention!
+                string[] allowedExtentions = { ".png", ".jpg" };
+                string extention = "";
+                if (file.FileName.LastIndexOf(".") > 0)
                 {
-                    imagesSize += stream.Length;
+                    extention = file.FileName.Substring(file.FileName.LastIndexOf(".")).ToLower();
                 }
-                else
+                if (!allowedExtentions.Where(e => e == extention).Any())
                 {
-                    //Delete the file if it is not supported!
-                    System.IO.File.Delete(filePath);
+                    //Extention is not supported
+                    return BadRequest("File sent with non supported extention");
                 }
 
+                //Build path in the web root (better to a specific folder under the web root
+                string filePath = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{student.UserStudentId}{extention}";
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    await file.CopyToAsync(stream);
+
+                    if (IsImage(stream))
+                    {
+                        imagesSize += stream.Length;
+                    }
+                    else
+                    {
+                        //Delete the file if it is not supported!
+                        System.IO.File.Delete(filePath);
+                    }
+
+                }
+
             }
 
+            DTO.Student dtoStudent = new DTO.Student(student);
+            dtoStudent.ProfilePic = GetProfileImageVirtualPath(dtoStudent.UserStudentId);
+            return Ok(dtoStudent);
         }
 
-        DTO.Teacher dtoTeacher = new DTO.Teacher(teacher);
-        dtoTeacher.ProfilePic = GetProfileImageVirtualPath(dtoTeacher.TeacherId);
-        return Ok(dtoTeacher);
+        // Teacher
+        if (loginDto.UserTypes == UserTypes.TEACHER)
+        {
+            string? teacherEmail = HttpContext.Session.GetString("loggedInTeacher");
+            if (string.IsNullOrEmpty(teacherEmail))
+            {
+                return Unauthorized("המשתמש לא מחובר למערכת");
+            }
+
+            //Get model user class from DB with matching email. 
+            Models.Teacher? teacher = context.GetTeacher(teacherEmail);
+            //Clear the tracking of all objects to avoid double tracking
+            context.ChangeTracker.Clear();
+
+            if (teacher == null)
+            {
+                return Unauthorized("המשתמש לא נמצא בדאטא בייס");
+            }
+
+
+            //Read all files sent
+            long imagesSize = 0;
+
+            if (file.Length > 0)
+            {
+                //Check the file extention!
+                string[] allowedExtentions = { ".png", ".jpg" };
+                string extention = "";
+                if (file.FileName.LastIndexOf(".") > 0)
+                {
+                    extention = file.FileName.Substring(file.FileName.LastIndexOf(".")).ToLower();
+                }
+                if (!allowedExtentions.Where(e => e == extention).Any())
+                {
+                    //Extention is not supported
+                    return BadRequest("File sent with non supported extention");
+                }
+
+                //Build path in the web root (better to a specific folder under the web root
+                string filePath = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{teacher.UserTeacherId}{extention}";
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    await file.CopyToAsync(stream);
+
+                    if (IsImage(stream))
+                    {
+                        imagesSize += stream.Length;
+                    }
+                    else
+                    {
+                        //Delete the file if it is not supported!
+                        System.IO.File.Delete(filePath);
+                    }
+
+                }
+
+            }
+
+            DTO.Teacher dtoTeacher = new DTO.Teacher(teacher);
+            dtoTeacher.ProfilePic = GetProfileImageVirtualPath(dtoTeacher.UserTeacherId);
+            return Ok(dtoTeacher);
+        }
+
+        //Manager
+
+        if (loginDto.UserTypes == UserTypes.MANAGER)
+        {
+            string?managerEmail = HttpContext.Session.GetString("loggedInManager");
+            if (string.IsNullOrEmpty(managerEmail))
+            {
+                return Unauthorized("המשתמש לא מחובר למערכת");
+            }
+
+            //Get model user class from DB with matching email. 
+            Models.Manager? manager = context.GetManager(managerEmail);
+            //Clear the tracking of all objects to avoid double tracking
+            context.ChangeTracker.Clear();
+
+            if (manager == null)
+            {
+                return Unauthorized("המשתמש לא נמצא בדאטא בייס");
+            }
+
+
+            //Read all files sent
+            long imagesSize = 0;
+
+            if (file.Length > 0)
+            {
+                //Check the file extention!
+                string[] allowedExtentions = { ".png", ".jpg" };
+                string extention = "";
+                if (file.FileName.LastIndexOf(".") > 0)
+                {
+                    extention = file.FileName.Substring(file.FileName.LastIndexOf(".")).ToLower();
+                }
+                if (!allowedExtentions.Where(e => e == extention).Any())
+                {
+                    //Extention is not supported
+                    return BadRequest("File sent with non supported extention");
+                }
+
+                //Build path in the web root (better to a specific folder under the web root
+                string filePath = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{manager.UserManagerId}{extention}";
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    await file.CopyToAsync(stream);
+
+                    if (IsImage(stream))
+                    {
+                        imagesSize += stream.Length;
+                    }
+                    else
+                    {
+                        //Delete the file if it is not supported!
+                        System.IO.File.Delete(filePath);
+                    }
+
+                }
+
+            }
+
+            DTO.Manager dtoManager = new DTO.Manager(manager);
+            dtoManager.ProfilePic = GetProfileImageVirtualPath(dtoManager.UserManagerId);
+            return Ok(dtoManager);
+        }
+        return Ok();
     }
 
-    //Helper functions
 
+
+    //Helper functions
     //this function gets a file stream and check if it is an image
     private static bool IsImage(Stream stream)
     {
@@ -256,17 +398,17 @@ public class DrivingSchoolAPIController : ControllerBase
 
     //this function check which profile image exist and return the virtual path of it.
     //if it does not exist it returns the default profile image virtual path
-    private string GetProfileImageVirtualPath(string teacherId)
+    private string GetProfileImageVirtualPath(int UserId)
     {
-        string virtualPath = $"/profileImages/{teacherId}";
-        string path = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{teacherId}.png";
+        string virtualPath = $"/profileImages/{UserId}";
+        string path = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{UserId}.png";
         if (System.IO.File.Exists(path))
         {
             virtualPath += ".png";
         }
         else
         {
-            path = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{teacherId}.jpg";
+            path = $"{this.webHostEnvironment.WebRootPath}\\profileImages\\{UserId}.jpg";
             if (System.IO.File.Exists(path))
             {
                 virtualPath += ".jpg";
@@ -279,62 +421,30 @@ public class DrivingSchoolAPIController : ControllerBase
 
         return virtualPath;
     }
-
     #endregion
 
-    #region Manager
-    [HttpPost("registerManager")]
-    public IActionResult RegisterManager([FromBody] DTO.Manager ManagerDto)
+
+    [HttpGet("getSchools")]
+    public IActionResult GetSchools()
     {
         try
         {
             HttpContext.Session.Clear(); //Logout any previous login attempt
 
-            //Create model user class
-            Models.Manager modelsManager = ManagerDto.GetModel();
+            //Get list of schools from DB
+            List<Models.Manager> managers = context.Managers.ToList();
+            List<DTO.Manager> dtoManagers = new List<DTO.Manager>();
 
-            context.Managers.Add(modelsManager);
-            context.SaveChanges(); // מכניס לדאטא בייס
-
-            //User was added!
-            DTO.Manager dtoManager = new DTO.Manager(modelsManager);
-            //dtoStudent.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
-            return Ok(dtoManager);
+            foreach (Models.Manager m in managers)
+            {
+                dtoManagers.Add(new DTO.Manager(m));
+            }
+            return Ok(dtoManagers);
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
     }
-    #endregion
-
-
-
-
 
 }
-        //[HttpPost("CheckSchoolExist")]
-        //public IActionResult CheckSchoolExist([FromBody] DTO.Manager managerDto)
-        //{
-        //    try
-        //    {
-
-        //        if (managerDto.SchoolName != null)
-        //        {
-        //            Models.Manager? modelsManagerToCheck = context.GetSchoolName(managerDto.SchoolName);
-        //            if (modelsManagerToCheck == null)
-        //            {
-        //                return Unauthorized();
-        //            }
-        //            return Ok();
-        //        }
-        //        return Unauthorized();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
-    
-

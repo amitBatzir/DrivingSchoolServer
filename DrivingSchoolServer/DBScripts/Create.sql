@@ -29,6 +29,7 @@ ManagerID nvarchar(50) Not Null,
 SchoolAddress nvarchar(50) Not Null,
 ManagerPhone nvarchar(10) Not Null,
 SchoolPhone nvarchar(10) Not Null,
+
 )
 
 Create table Package
@@ -137,8 +138,8 @@ VALUES('Approved')
 INSERT INTO Statuses(StatusDescription)
 VALUES('Declined')
 
-INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus, TeacherID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
-VALUES('Itzik', 'Rotem', 'Rotem@gmail.com', '123', 1, '217389065', 'Golda Meir', '0537786549', '03456789', 'Ramon')
+INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
+VALUES('Itzik', 'Rotem', 'Rotem@gmail.com', '123', 1, '234567890', 'Golda Meir', '0537786549', '03456789', 'Ramon')
 SELECT * FROM Manager
 
 -- Create a login for the admin user

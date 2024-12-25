@@ -16,6 +16,8 @@ namespace DrivingSchoolServer.DTO
         public string ManagerPhone { get; set; } = null!;
         public string SchoolPhone { get; set; } = null!;
         public string SchoolName { get; set; } = null;
+        public string ProfilePic { get; set; } = null;
+
 
         public Manager() { }
         public Manager(Models.Manager m)
@@ -31,6 +33,7 @@ namespace DrivingSchoolServer.DTO
             ManagerPhone = m.ManagerPhone;
             SchoolPhone = m.SchoolPhone;
             SchoolName = m.SchoolName;
+            //ProfilePic = m.ProfilePic;
         }
 
         public Models.Manager GetModel()
