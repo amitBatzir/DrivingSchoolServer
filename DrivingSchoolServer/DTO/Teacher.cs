@@ -17,7 +17,7 @@ namespace DrivingSchoolServer.DTO
         public string WayToPay { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string Gender { get; set; } = null!;
-        public string ProfilePic { get; set; } = null!;
+        public string? ProfilePic { get; set; } = null!;
         public int ManagerId { get; set; }
   
         public Teacher() { }
