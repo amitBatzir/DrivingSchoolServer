@@ -11,7 +11,6 @@ namespace DrivingSchoolServer.DTO
         public int StudentStatus { get; set; }
         public string StudentEmail { get; set; } = null!;
         public string StudentPass { get; set; } = null!;
-        public string SchoolName { get; set; } = null!;
         public string StudentLanguage { get; set; } = null!;
         public bool DoneTheoryTest { get; set; }
         public DateOnly DateOfTheory { get; set; }
@@ -26,7 +25,7 @@ namespace DrivingSchoolServer.DTO
         public int CurrentLessonNum { get; set; } 
         public bool InternalTestDone { get; set; }
         public string StudentAddress { get; set; } = null!;
-        public string ProfilePic { get; set; } = null!;
+        public string? ProfilePic { get; set; } = null!;
         public int PackageId { get; set; }
         public Student() { }
         public Student(Models.Student st)
@@ -37,12 +36,9 @@ namespace DrivingSchoolServer.DTO
             StudentStatus = st.StudentStatus;
             StudentEmail = st.StudentEmail;
             StudentPass = st.StudentPass;
-            SchoolName = st.SchoolName;
             StudentLanguage = st.StudentLanguage;
-            DoneTheoryTest = st.DoneTheoryTest;
             DateOfTheory = st.DateOfTheory;
             LengthOfLesson= st.LengthOfLesson;
-            HaveDocuments = st.HaveDocuments;
             TeacherId = st.TeacherId;
             DrivingTechnic = st.DrivingTechnic;
             Gender = st.Gender;
@@ -52,7 +48,7 @@ namespace DrivingSchoolServer.DTO
             CurrentLessonNum = st.CurrentLessonNum;
             InternalTestDone = st.InternalTestDone;
             StudentAddress = st.StudentAddress;
-            ProfilePic = st.ProfilePic;
+            st.ProfilePic = ProfilePic;
             PackageId = st.PackageId;
         }
 
@@ -65,12 +61,9 @@ namespace DrivingSchoolServer.DTO
             st.StudentStatus = StudentStatus;
             st.StudentEmail = StudentEmail;
             st.StudentPass = StudentPass;
-            st.SchoolName = SchoolName;
             st.StudentLanguage = StudentLanguage;
-            st.DoneTheoryTest = DoneTheoryTest;
             st.DateOfTheory = DateOfTheory;
             st.LengthOfLesson = LengthOfLesson;
-            st.HaveDocuments = HaveDocuments;
             st.TeacherId = TeacherId;
             st.DrivingTechnic = DrivingTechnic;
             st.Gender = Gender;

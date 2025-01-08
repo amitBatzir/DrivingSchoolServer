@@ -18,6 +18,7 @@ namespace DrivingSchoolServer.DTO
         public string PhoneNumber { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public string? ProfilePic { get; set; } = null!;
+        public string DrivingTechnic { get; set; } = null!;
         public int ManagerId { get; set; }
   
         public Teacher() { }
@@ -35,7 +36,9 @@ namespace DrivingSchoolServer.DTO
             PhoneNumber = t.PhoneNumber;
             Gender = t.Gender;
             ProfilePic = t.ProfilePic;
+            DrivingTechnic = t.DrivingTechnic;
             ManagerId = t.ManagerId;
+
         }
 
         public Models.Teacher GetModel()
@@ -53,6 +56,7 @@ namespace DrivingSchoolServer.DTO
             t.PhoneNumber = PhoneNumber;
             t.Gender = Gender;
             t.ProfilePic = ProfilePic;
+            t.DrivingTechnic = DrivingTechnic;
             t.ManagerId = ManagerId;
             return t;
         }

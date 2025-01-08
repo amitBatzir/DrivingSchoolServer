@@ -424,6 +424,7 @@ public class DrivingSchoolAPIController : ControllerBase
     #endregion
 
 
+    // פעולה שמחזירה רשימה של המנהלים - כל מנהל הוא בבית ספר אחר
     [HttpGet("getSchools")]
     public IActionResult GetSchools()
     {
@@ -440,6 +441,62 @@ public class DrivingSchoolAPIController : ControllerBase
                 dtoManagers.Add(new DTO.Manager(m));
             }
             return Ok(dtoManagers);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    // פעולה שמחזירה את כל המורים מבית ספר ספציפי - שולחים אליה את האיי די הייחודי למנהל ולפי זה בודקים
+    [HttpGet("getTeacherOfSchool")]
+    public IActionResult GetTeacherOfSchool([FromQuery]int ManagerId)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+            //Get list of teac from DB
+            List<Models.Teacher> teachers = context.Teachers.ToList();
+            List<DTO.Teacher> dtosTeachers = new List<DTO.Teacher>();
+
+            foreach (Models.Teacher t in teachers)
+            {
+                if(t.ManagerId == ManagerId)
+                {
+                    dtosTeachers.Add(new DTO.Teacher(t));
+                }
+             
+            }
+            return Ok(dtosTeachers);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+
+    [HttpGet("getPackageOfSchool")]
+    public IActionResult GetPackageOfSchool([FromQuery] int ManagerId)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+            //Get list of PACKAGES  from DB
+            List<Models.Package> packages = context.Packages.ToList();
+            List<DTO.Package> dtoPackages = new List<DTO.Package>();
+
+            foreach (Models.Package p in packages)
+            {
+                if (p.ManagerId == ManagerId)
+                {
+                    dtoPackages.Add(new DTO.Package(p));
+                }
+
+            }
+            return Ok(dtoPackages);
         }
         catch (Exception ex)
         {

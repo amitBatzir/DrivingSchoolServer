@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DrivingSchoolServer.Models;
 
 [Table("Manager")]
-[Index("ManagerEmail", Name = "UQ__Manager__351A32D70BFC0FFE", IsUnique = true)]
+[Index("ManagerEmail", Name = "UQ__Manager__351A32D7CF1AE99E", IsUnique = true)]
 public partial class Manager
 {
     [Key]
@@ -43,6 +43,9 @@ public partial class Manager
 
     [StringLength(10)]
     public string SchoolPhone { get; set; } = null!;
+
+    [StringLength(50)]
+    public string? ProfilePic { get; set; }
 
     [InverseProperty("Teacher")]
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
