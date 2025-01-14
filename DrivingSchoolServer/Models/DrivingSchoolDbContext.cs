@@ -43,7 +43,7 @@ public partial class DrivingSchoolDbContext : DbContext
     {
         modelBuilder.Entity<Comment>(entity =>
         {
-            entity.HasKey(e => e.CommentId).HasName("PK__Comment__C3B4DFAA6B2E67B8");
+            entity.HasKey(e => e.CommentId).HasName("PK__Comment__C3B4DFAA4FED63BF");
 
             entity.HasOne(d => d.Student).WithMany(p => p.Comments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -56,7 +56,7 @@ public partial class DrivingSchoolDbContext : DbContext
 
         modelBuilder.Entity<Lesson>(entity =>
         {
-            entity.HasKey(e => e.LessonId).HasName("PK__Lesson__B084ACB065E27E15");
+            entity.HasKey(e => e.LessonId).HasName("PK__Lesson__B084ACB0171E97E1");
 
             entity.Property(e => e.DidExist).HasDefaultValue(true);
 
@@ -71,7 +71,7 @@ public partial class DrivingSchoolDbContext : DbContext
 
         modelBuilder.Entity<Manager>(entity =>
         {
-            entity.HasKey(e => e.UserManagerId).HasName("PK__Manager__96A0B52DC4DC5D04");
+            entity.HasKey(e => e.UserManagerId).HasName("PK__Manager__96A0B52D815D52E3");
 
             entity.HasOne(d => d.ManagerStatusNavigation).WithMany(p => p.Managers)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -80,7 +80,7 @@ public partial class DrivingSchoolDbContext : DbContext
 
         modelBuilder.Entity<Package>(entity =>
         {
-            entity.HasKey(e => e.PackageId).HasName("PK__Package__322035EC3D845D69");
+            entity.HasKey(e => e.PackageId).HasName("PK__Package__322035EC18874F2A");
 
             entity.HasOne(d => d.Manager).WithMany(p => p.Packages)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -89,12 +89,12 @@ public partial class DrivingSchoolDbContext : DbContext
 
         modelBuilder.Entity<Status>(entity =>
         {
-            entity.HasKey(e => e.StatusId).HasName("PK__Statuses__C8EE204364649E8A");
+            entity.HasKey(e => e.StatusId).HasName("PK__Statuses__C8EE204399FAB66C");
         });
 
         modelBuilder.Entity<Student>(entity =>
         {
-            entity.HasKey(e => e.UserStudentId).HasName("PK__Student__ADF851763CB4B266");
+            entity.HasKey(e => e.UserStudentId).HasName("PK__Student__ADF851769FEDACBA");
 
             entity.Property(e => e.InternalTestDone).HasDefaultValue(true);
 
@@ -113,7 +113,7 @@ public partial class DrivingSchoolDbContext : DbContext
 
         modelBuilder.Entity<Teacher>(entity =>
         {
-            entity.HasKey(e => e.UserTeacherId).HasName("PK__Teacher__365C454B1E4418FB");
+            entity.HasKey(e => e.UserTeacherId).HasName("PK__Teacher__365C454BD30A59EE");
 
             entity.HasOne(d => d.Manager).WithMany(p => p.Teachers)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -126,7 +126,7 @@ public partial class DrivingSchoolDbContext : DbContext
 
         modelBuilder.Entity<TeacherSchedule>(entity =>
         {
-            entity.HasKey(e => e.ScheduleId).HasName("PK__TeacherS__9C8A5B6907F9C08B");
+            entity.HasKey(e => e.ScheduleId).HasName("PK__TeacherS__9C8A5B6983BFADFE");
 
             entity.HasOne(d => d.Teacher).WithMany(p => p.TeacherSchedules)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -135,7 +135,7 @@ public partial class DrivingSchoolDbContext : DbContext
 
         modelBuilder.Entity<Test>(entity =>
         {
-            entity.HasKey(e => e.TestId).HasName("PK__Tests__8CC331003C9A4BA1");
+            entity.HasKey(e => e.TestId).HasName("PK__Tests__8CC3310097569A8A");
 
             entity.Property(e => e.PassedOrNot).HasDefaultValue(true);
 

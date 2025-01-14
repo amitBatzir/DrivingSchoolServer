@@ -65,6 +65,7 @@ Create table Student
 UserStudentID int Primary Key Identity(1,1),
 FirstName nvarchar(50) Not Null,
 LastName nvarchar(50) Not Null,
+SchoolName nvarchar(50) Not Null,  
 StudentStatus int Not Null Foreign Key References Statuses(StatusID),
 StudentEmail nvarchar(50) Unique Not Null,
 StudentPass nvarchar(50) Not Null,

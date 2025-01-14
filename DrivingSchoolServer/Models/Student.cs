@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DrivingSchoolServer.Models;
 
 [Table("Student")]
-[Index("StudentEmail", Name = "UQ__Student__3569CFDB9B21EFDE", IsUnique = true)]
+[Index("StudentEmail", Name = "UQ__Student__3569CFDB54F43DEB", IsUnique = true)]
 public partial class Student
 {
     [Key]
@@ -19,6 +19,9 @@ public partial class Student
 
     [StringLength(50)]
     public string LastName { get; set; } = null!;
+
+    [StringLength(50)]
+    public string SchoolName { get; set; } = null!;
 
     public int StudentStatus { get; set; }
 
