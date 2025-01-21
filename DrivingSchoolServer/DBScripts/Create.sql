@@ -142,8 +142,8 @@ INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatu
 VALUES('Itzik', 'Rotem', 'Rotem@gmail.com', '123', 2, '234567890', 'Golda Meir', '0537786549', '03456789', 'Ramon')
 SELECT * FROM Manager
 
-INSERT INTO Teacher(SchoolName, TeacherEmail, FirstName, LastName, TeacherPass,TeacherStatus, TeacherID,  WayToPay, PhoneNumber, Gender, ManagerID)
-VALUES('Ramon', 'Marom@gmail.com', 'Marom', 'Hai', 'm123',2, '111111111', 'Cash', '000000000', 'female', 1)
+INSERT INTO Teacher(SchoolName, TeacherEmail, FirstName, LastName, TeacherPass,TeacherStatus, TeacherID,  WayToPay, PhoneNumber, Gender, ManagerID, DrivingTechnic)
+VALUES('Ramon', 'Marom@gmail.com', 'Marom', 'Hai', 'm123',2, '111111111', 'Cash', '000000000', 'female', 1, 'Autumat')
 SELECT * FROM Teacher
 
 INSERT INTO Package(ManagerID, Title, TheText)
@@ -159,6 +159,7 @@ Go
 CREATE USER [DrivingSchoolAdminUser] FOR LOGIN [DrivingSchoolAdminLogin];
 Go
 
+SELECT * FROM Teacher
 
 
 
