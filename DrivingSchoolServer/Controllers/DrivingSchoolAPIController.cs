@@ -102,7 +102,7 @@ public class DrivingSchoolAPIController : ControllerBase
 
             //User was added!
             DTO.Student dtoStudent = new DTO.Student(modelsStudent);
-            //dtoStudent.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            dtoStudent.ProfilePic = GetProfileImageVirtualPath(dtoStudent.UserStudentId);
             return Ok(dtoStudent);
         }
         catch (Exception ex)

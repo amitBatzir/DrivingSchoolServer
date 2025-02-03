@@ -76,6 +76,7 @@ namespace DrivingSchoolServer.DTO
             st.StudentAddress = StudentAddress;
             st.ProfilePic = ProfilePic;
             st.PackageId = PackageId;
+            st.SchoolName = "";
             return st;
         }
 
