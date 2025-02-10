@@ -164,47 +164,8 @@ public class DrivingSchoolAPIController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
-    [HttpPost("updateManager")]
-    public IActionResult UpdateManager([FromBody] DTO.Manager managerDto)
-    {
-        try
-        {
-            //Check if who is logged in
-            string? managerEmail = HttpContext.Session.GetString("loggedInManager");
-            if (string.IsNullOrEmpty(managerEmail))
-            {
-                return Unauthorized("המשתמש אינו רשום");
-            }
-
-            //Get model user class from DB with matching email. 
-            Models.Manager? theManager = context.GetManager(managerEmail);
-            //Clear the tracking of all objects to avoid double tracking
-            context.ChangeTracker.Clear();
-
-            //Check if the user that is logged in is the same user of the task
-            //this situation is ok only if the user is a manager
-            if (theManager == null || (managerDto.UserManagerId != theManager.UserManagerId))
-            {
-                return Unauthorized("עדכון המשתמש נכשל");
-            }
-
-            Models.Manager appManager = managerDto.GetModel();
-
-            context.Entry(appManager).State = EntityState.Modified;
-
-            context.SaveChanges();
-
-            //Profile was updated!
-            return Ok();
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-
         #endregion
-    }
+    
         #region Photo
 
         [HttpPost("UploadProfileImage")]
@@ -461,11 +422,55 @@ public class DrivingSchoolAPIController : ControllerBase
 
             return virtualPath;
         }
-        #endregion
+    #endregion
+
+    #region Profile Page 
+    //This method call the UpdateUser web API on the server and return true if the call was successful
+    //or false if the call fails
+    [HttpPost("updateManager")]
+    public IActionResult UpdateManager([FromBody] DTO.Manager ManagerDto)
+    {
+        try
+        {
+            //Check if who is logged in
+            string? ManagerEmail = HttpContext.Session.GetString("loggedInManager");
+            if (string.IsNullOrEmpty(ManagerEmail))
+            {
+                return Unauthorized("המשתמש לא מחובר");
+            }
+
+            //Get model user class from DB with matching email. 
+            Models.Manager? manager = context.GetManager(ManagerEmail);
+            //Clear the tracking of all objects to avoid double tracking
+            context.ChangeTracker.Clear();
+
+            //Check if the user that is logged in is the same user of the task
+            //this situation is ok only if the user is a manager
+            if (manager == null || (ManagerDto.UserManagerId != manager.UserManagerId))
+            {
+                return Unauthorized("המשתמש מנסה לעדכן משתמש אחר");
+            }
+
+            Models.Manager m = ManagerDto.GetModel();
+
+            context.Entry(m).State = EntityState.Modified;
+
+            context.SaveChanges();
+
+            //Task was updated!
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+    #endregion
 
 
-        // פעולה שמחזירה רשימה של המנהלים - כל מנהל הוא בבית ספר אחר
-        [HttpGet("getSchools")]
+    // פעולה שמחזירה רשימה של המנהלים - כל מנהל הוא בבית ספר אחר
+    [HttpGet("getSchools")]
         public IActionResult GetSchools()
         {
             try
