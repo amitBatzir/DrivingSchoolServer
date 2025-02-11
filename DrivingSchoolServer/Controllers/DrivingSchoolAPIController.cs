@@ -424,7 +424,7 @@ public class DrivingSchoolAPIController : ControllerBase
         }
     #endregion
 
-    #region Profile Page 
+    #region Profile  
     //This method call the UpdateUser web API on the server and return true if the call was successful
     //or false if the call fails
     [HttpPost("updateManager")]
