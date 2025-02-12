@@ -164,11 +164,35 @@ public class DrivingSchoolAPIController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-        #endregion
-    
-        #region Photo
 
-        [HttpPost("UploadProfileImage")]
+    [HttpGet("getAllStudents")]
+    public IActionResult GetAllStudents()
+    {
+        try
+        {
+            //Get list of students from DB
+            List<Models.Student> students = context.Students.ToList();
+            List<DTO.Student> dtoStudents = new List<DTO.Student>();
+
+            foreach (Models.Student s in students)
+            {
+                if(s.StudentStatus == 2)
+                {
+                    dtoStudents.Add(new DTO.Student(s));
+                }
+            }
+            return Ok(dtoStudents);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    #endregion
+
+    #region Photo
+
+    [HttpPost("UploadProfileImage")]
         public async Task<IActionResult> UploadProfileImageAsync(IFormFile file, [FromBody] DTO.LoginInfo loginDto)
         {
             //Check if who is logged in
@@ -507,7 +531,7 @@ public class DrivingSchoolAPIController : ControllerBase
 
                 foreach (Models.Teacher t in teachers)
                 {
-                    if (t.ManagerId == ManagerId)
+                    if (t.ManagerId == ManagerId && t.TeacherStatus == 2)
                     {
                         dtosTeachers.Add(new DTO.Teacher(t));
                     }

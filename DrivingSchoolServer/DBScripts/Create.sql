@@ -55,7 +55,7 @@ TeacherID nvarchar(50) Not Null,
 WayToPay nvarchar(50) Not Null,
 PhoneNumber nvarchar(50) Not Null,
 Gender nvarchar(50) Not Null,
-ProfilePic nvarchar(50) Null,
+ProfilePic nvarchar(500) Null,
 DrivingTechnic nvarchar(50) Not Null,
 ManagerID int Not Null Foreign Key References Manager(UserManagerID),
 )
@@ -81,7 +81,7 @@ PhoneNumber nvarchar(10) Not Null,
 CurrentLessonNum int Not Null,
 InternalTestDone bit Not Null Default 1,
 StudentAddress nvarchar(50) Not Null,
-ProfilePic nvarchar(50) Null,
+ProfilePic nvarchar(500) Null,
 PackageID int Not Null Foreign Key References Package(PackageID),
 )
 
@@ -150,6 +150,14 @@ INSERT INTO Package(ManagerID, Title, TheText)
 VALUES(1, 'Package number 1', '100 for 5 lessons')
 SELECT * FROM Package
 
+INSERT INTO Student(FirstName,LastName,SchoolName,StudentStatus, StudentEmail, StudentPass,StudentLanguage, DateOfTheory,TeacherID,  LengthOfLesson, DrivingTechnic, Gender, StudentId, DateOfBirth, PhoneNumber, CurrentLessonNum, InternalTestDone, StudentAddress, PackageID)
+VALUES('Ori', 'Geva', 'Ramon',2, 'a@gmail.com', '123a', 'hebrow', '11-FEB-2025',1, 40, 'autumat', 'male', '000000000', '11-FEB-2007', '0000000000', 0,  1, 'golsa', 1)
+SELECT * FROM Student
+SELECT * FROM Manager
+SELECT * FROM Statuses
+
+
+
 
 -- Create a login for the admin user
 CREATE LOGIN [DrivingSchoolAdminLogin] WITH PASSWORD = 'thePassword';
@@ -159,7 +167,7 @@ Go
 CREATE USER [DrivingSchoolAdminUser] FOR LOGIN [DrivingSchoolAdminLogin];
 Go
 
-SELECT * FROM Teacher
+SELECT * FROM Manager
 
 
 
