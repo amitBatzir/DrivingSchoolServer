@@ -507,8 +507,12 @@ public class DrivingSchoolAPIController : ControllerBase
 
                 foreach (Models.Manager m in managers)
                 {
-                    dtoManagers.Add(new DTO.Manager(m));
-                }
+                if (m.ManagerStatus == 2)
+                    {
+                        dtoManagers.Add(new DTO.Manager(m));
+
+                    }
+            }
                 return Ok(dtoManagers);
             }
             catch (Exception ex)
@@ -572,5 +576,47 @@ public class DrivingSchoolAPIController : ControllerBase
                 return BadRequest(ex.Message);
             }
         }
+            [HttpGet("showPendingTeachers")]
+            public IActionResult ShowPendingTeachers()
+            {
+                try
+                {
 
+                    List<Models.Teacher> teachers = context.Teachers.ToList();
+                    List<DTO.Teacher> dtoteachers = new List<DTO.Teacher>();
+
+                    foreach (Models.Teacher t in teachers)
+                    {
+                        if (t.TeacherStatus == 1)
+                        {
+                           dtoteachers.Add(new DTO.Teacher(t));
+                        }
+
+                    }                  
+                    return Ok(dtoteachers);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+    [HttpGet("approvingTeacher")]
+    public IActionResult ApprovingTeacher([FromQuery] int TeacherId)
+    {
+        try
+        {
+            Models.Teacher? t = context.Teachers.Where(tt => tt.UserTeacherId == TeacherId).FirstOrDefault();
+            if (t == null)
+                return BadRequest("No Such Teacher ID");
+            t.TeacherStatus = 2;
+            context.Update(t);
+            context.SaveChanges();
+            
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }
