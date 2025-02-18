@@ -600,7 +600,7 @@ public class DrivingSchoolAPIController : ControllerBase
                     return BadRequest(ex.Message);
                 }
             }
-    [HttpGet("approvingTeacher")]
+    [HttpPost("approvingTeacher")]
     public IActionResult ApprovingTeacher([FromQuery] int TeacherId)
     {
         try
@@ -612,6 +612,25 @@ public class DrivingSchoolAPIController : ControllerBase
             context.Update(t);
             context.SaveChanges();
             
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    [HttpPost("decliningTeacher")]
+    public IActionResult DecliningTeacher([FromQuery] int TeacherId)
+    {
+        try
+        {
+            Models.Teacher? t = context.Teachers.Where(tt => tt.UserTeacherId == TeacherId).FirstOrDefault();
+            if (t == null)
+                return BadRequest("No Such Teacher ID");
+            t.TeacherStatus = 3;
+            context.Update(t);
+            context.SaveChanges();
+
             return Ok();
         }
         catch (Exception ex)
