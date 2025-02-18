@@ -577,7 +577,7 @@ public class DrivingSchoolAPIController : ControllerBase
             }
         }
             [HttpGet("showPendingTeachers")]
-            public IActionResult ShowPendingTeachers()
+            public IActionResult ShowPendingTeachers(int ManagerId)
             {
                 try
                 {
@@ -587,7 +587,7 @@ public class DrivingSchoolAPIController : ControllerBase
 
                     foreach (Models.Teacher t in teachers)
                     {
-                        if (t.TeacherStatus == 1)
+                        if (t.ManagerId==ManagerId && t.TeacherStatus == 1)
                         {
                            dtoteachers.Add(new DTO.Teacher(t));
                         }
