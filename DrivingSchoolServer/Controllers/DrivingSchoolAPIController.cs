@@ -600,7 +600,7 @@ public class DrivingSchoolAPIController : ControllerBase
                     return BadRequest(ex.Message);
                 }
             }
-    [HttpPost("approvingTeacher")]
+    [HttpGet("approvingTeacher")]
     public IActionResult ApprovingTeacher([FromQuery] int TeacherId)
     {
         try
@@ -619,7 +619,7 @@ public class DrivingSchoolAPIController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-    [HttpPost("decliningTeacher")]
+    [HttpGet("decliningTeacher")]
     public IActionResult DecliningTeacher([FromQuery] int TeacherId)
     {
         try
