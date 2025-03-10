@@ -152,7 +152,7 @@ SELECT * FROM Package
 
 INSERT INTO Student(FirstName,LastName,SchoolName,StudentStatus, StudentEmail, StudentPass,StudentLanguage, DateOfTheory,TeacherID,  LengthOfLesson, DrivingTechnic, Gender, StudentId, DateOfBirth, PhoneNumber, CurrentLessonNum, InternalTestDone, StudentAddress, PackageID)
 VALUES('Ori', 'Geva', 'Ramon',2, 'a@gmail.com', '123a', 'hebrow', '11-FEB-2025',1, 40, 'autumat', 'male', '000000000', '11-FEB-2007', '0000000000', 0,  1, 'golsa', 1)
-SELECT * FROM Student
+SELECT * FROM Manager
 SELECT * FROM Teacher
 SELECT * FROM Statuses
 
