@@ -530,6 +530,45 @@ public class DrivingSchoolAPIController : ControllerBase
         }
 
     }
+    [HttpPost("updateStudent")]
+    public IActionResult UpdateStudent([FromBody] DTO.Student StudentDto)
+    {
+        try
+        {
+            //Check if who is logged in
+            string? StudentEmail = HttpContext.Session.GetString("loggedInStudent");
+            if (string.IsNullOrEmpty(StudentEmail))
+            {
+                return Unauthorized("המשתמש לא מחובר");
+            }
+
+            //Get model user class from DB with matching email. 
+            Models.Student? student = context.GetStudent(StudentEmail);
+            //Clear the tracking of all objects to avoid double tracking
+            context.ChangeTracker.Clear();
+
+            //Check if the user that is logged in is the same user of the task
+            //this situation is ok only if the user is a manager
+            if (student == null || (StudentDto.UserStudentId != student.UserStudentId))
+            {
+                return Unauthorized("המשתמש מנסה לעדכן משתמש אחר");
+            }
+
+            Models.Student s = StudentDto.GetModel();
+
+            context.Entry(ts).State = EntityState.Modified;
+
+            context.SaveChanges();
+
+            //Task was updated!
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
     #endregion
 
 
