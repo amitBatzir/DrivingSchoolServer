@@ -100,7 +100,7 @@ public class DrivingSchoolAPIController : ControllerBase
             context.Students.Add(modelsStudent);
             context.SaveChanges(); // מכניס לדאטא בייס
 
-            //User was added!
+            //Student was added!
             DTO.Student dtoStudent = new DTO.Student(modelsStudent);
             dtoStudent.ProfilePic = GetProfileImageVirtualPath(dtoStudent.UserStudentId);
             return Ok(dtoStudent);
@@ -126,7 +126,7 @@ public class DrivingSchoolAPIController : ControllerBase
             context.Teachers.Add(modelsTeacher);
             context.SaveChanges(); // מכניס לדאטא בייס
 
-            //User was added!
+            //Teacher was added!
             DTO.Teacher dtoTeacher = new DTO.Teacher(modelsTeacher);
             dtoTeacher.ProfilePic = GetProfileImageVirtualPath(dtoTeacher.UserTeacherId);
             return Ok(modelsTeacher);
@@ -154,7 +154,7 @@ public class DrivingSchoolAPIController : ControllerBase
             context.Managers.Add(modelsManager);
             context.SaveChanges(); // מכניס לדאטא בייס
 
-            //User was added!
+            //Manager was added!
             DTO.Manager dtoManager = new DTO.Manager(modelsManager);
             //dtoStudent.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
             return Ok(dtoManager);
@@ -556,7 +556,7 @@ public class DrivingSchoolAPIController : ControllerBase
 
             Models.Student s = StudentDto.GetModel();
 
-            context.Entry(ts).State = EntityState.Modified;
+            context.Entry(s).State = EntityState.Modified;
 
             context.SaveChanges();
 
@@ -655,7 +655,8 @@ public class DrivingSchoolAPIController : ControllerBase
                 return BadRequest(ex.Message);
             }
         }
-            [HttpGet("showPendingTeachers")]
+    #region Approving Teachers
+    [HttpGet("showPendingTeachers")]
             public IActionResult ShowPendingTeachers(int ManagerId)
             {
                 try
@@ -717,4 +718,70 @@ public class DrivingSchoolAPIController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+    #endregion
+
+    #region Approving Students
+    [HttpGet("showPendingStudent")]
+    public IActionResult ShowPendingStudent(int TeacherId)
+    {
+        try
+        {
+
+            List<Models.Student> students = context.Students.ToList();
+            List<DTO.Student> dtoStudents = new List<DTO.Student>();
+
+            foreach (Models.Student s in students)
+            {
+                if (s.TeacherId == TeacherId && s.StudentStatus == 1)
+                {
+                    dtoStudents.Add(new DTO.Student(s));
+                }
+
+            }
+            return Ok(dtoStudents);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    [HttpGet("approvingStudent")]
+    public IActionResult ApprovingStudent([FromQuery] int StudentId)
+    {
+        try
+        {
+            Models.Student? s = context.Students.Where(ss => ss.UserStudentId == StudentId).FirstOrDefault();
+            if (s == null)
+                return BadRequest("No Such Student ID");
+            s.StudentStatus = 2;
+            context.Update(s);
+            context.SaveChanges();
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    [HttpGet("decliningStudent")]
+    public IActionResult DecliningStudent([FromQuery] int StudentId)
+    {
+        try
+        {
+            Models.Student? s = context.Students.Where(ss => ss.UserStudentId == StudentId).FirstOrDefault();
+            if (s == null)
+                return BadRequest("No Such Student ID");
+            s.StudentStatus = 3;
+            context.Update(s);
+            context.SaveChanges();
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    #endregion
 }

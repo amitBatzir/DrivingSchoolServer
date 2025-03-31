@@ -70,13 +70,13 @@ StudentStatus int Not Null Foreign Key References Statuses(StatusID),
 StudentEmail nvarchar(50) Unique Not Null,
 StudentPass nvarchar(50) Not Null,
 StudentLanguage nvarchar(50) Not Null,
-DateOfTheory Date Not Null,
+DateOfTheory DateTime Not Null,
 LengthOfLesson int Not Null,
 TeacherID int Not Null Foreign Key References Teacher(UserTeacherID),
 DrivingTechnic nvarchar(50) Not Null,
 Gender nvarchar(50) Not Null,
 StudentId nvarchar(50) Not Null,
-DateOfBirth Date Not Null,
+DateOfBirth DateTime Not Null,
 PhoneNumber nvarchar(10) Not Null,
 CurrentLessonNum int Not Null,
 InternalTestDone bit Not Null Default 1,
@@ -137,6 +137,8 @@ INSERT INTO Statuses(StatusDescription)
 VALUES('Approved')
 INSERT INTO Statuses(StatusDescription)
 VALUES('Declined')
+SELECT * FROM Statuses
+
 
 INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
 VALUES('Itzik', 'Rotem', 'Rotem@gmail.com', '123', 2, '234567890', 'Golda Meir', '0537786549', '03456789', 'Ramon')
@@ -148,7 +150,9 @@ SELECT * FROM Manager
 INSERT INTO Teacher(SchoolName, TeacherEmail, FirstName, LastName, TeacherPass,TeacherStatus, TeacherID,  WayToPay, PhoneNumber, Gender, ManagerID, DrivingTechnic)
 VALUES('Ramon', 'Marom@gmail.com', 'Marom', 'Hai', 'm123',2, '111111111', 'Cash', '000000000', 'female', 1, 'Autumat')
 INSERT INTO Teacher(SchoolName, TeacherEmail, FirstName, LastName, TeacherPass,TeacherStatus, TeacherID,  WayToPay, PhoneNumber, Gender, ManagerID, DrivingTechnic)
-VALUES('Ramon', 'Shahar@gmail.com', 'Shahar', 'Batzir', 's123',1 '111111111', 'Cash', '000000000', 'female', 1, 'Autumat')
+VALUES('Ramon', 'Shahar@gmail.com', 'Shahar', 'Batzir', 's123',1 ,'2222222', 'Cash', '000000000', 'female', 1, 'Autumat')
+INSERT INTO Teacher(SchoolName, TeacherEmail, FirstName, LastName, TeacherPass,TeacherStatus, TeacherID,  WayToPay, PhoneNumber, Gender, ManagerID, DrivingTechnic)
+VALUES('Ramon', 'Gal@gmail.com', 'Gal', 'Klug', 'g123',1 ,'2223222', 'Cash', '000000000', 'female', 1, 'Autumat')
 SELECT * FROM Teacher
 
 INSERT INTO Package(ManagerID, Title, TheText)
@@ -157,9 +161,9 @@ SELECT * FROM Package
 
 INSERT INTO Student(FirstName,LastName,SchoolName,StudentStatus, StudentEmail, StudentPass,StudentLanguage, DateOfTheory,TeacherID,  LengthOfLesson, DrivingTechnic, Gender, StudentId, DateOfBirth, PhoneNumber, CurrentLessonNum, InternalTestDone, StudentAddress, PackageID)
 VALUES('Ori', 'Geva', 'Ramon',2, 'o@gmail.com', '123o', 'hebrow', '11-FEB-2025',1, 40, 'autumat', 'male', '000000000', '11-FEB-2007', '0000000000', 0,  1, 'golsa', 1)
-SELECT * FROM Manager
-SELECT * FROM Teacher
-SELECT * FROM Statuses
+INSERT INTO Student(FirstName,LastName,SchoolName,StudentStatus, StudentEmail, StudentPass,StudentLanguage, DateOfTheory,TeacherID,  LengthOfLesson, DrivingTechnic, Gender, StudentId, DateOfBirth, PhoneNumber, CurrentLessonNum, InternalTestDone, StudentAddress, PackageID)
+VALUES('Maayan', 'Kisluk', 'Ramon',1, 'Maayan@gmail.com', 'Maayan123', 'hebrow', '11-FEB-2025',1, 10, 'autumat', 'Female', '000000000', '11-FEB-2007', '0000000000', 0,  1, 'herzog', 1)
+SELECT * FROM Student
 
 
 
@@ -172,7 +176,6 @@ Go
 CREATE USER [DrivingSchoolAdminUser] FOR LOGIN [DrivingSchoolAdminLogin];
 Go
 
-SELECT * FROM Manager
 
 
 

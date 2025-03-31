@@ -14,14 +14,14 @@ namespace DrivingSchoolServer.DTO
         public string StudentPass { get; set; } = null!;
         public string StudentLanguage { get; set; } = null!;
         public bool DoneTheoryTest { get; set; }
-        public DateOnly DateOfTheory { get; set; }
+        public DateTime DateOfTheory { get; set; }
         public int LengthOfLesson { get; set; }
         public bool HaveDocuments { get; set; }
         public int TeacherId { get; set; }
         public string DrivingTechnic { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public string StudentId { get; set; } = null!;
-        public DateOnly DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string PhoneNumber { get; set; } = null!;
         public int CurrentLessonNum { get; set; } 
         public bool InternalTestDone { get; set; }
@@ -76,7 +76,7 @@ namespace DrivingSchoolServer.DTO
             st.StudentAddress = StudentAddress;
             st.ProfilePic = ProfilePic;
             st.PackageId = PackageId;
-            st.SchoolName = "";
+            st.SchoolName = SchoolName;
             return st;
         }
 
