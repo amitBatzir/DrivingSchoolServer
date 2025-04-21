@@ -571,6 +571,70 @@ public class DrivingSchoolAPIController : ControllerBase
     }
     #endregion
 
+    #region Lessons
+    [HttpGet("getPreviousLessons")]
+    public IActionResult GetPreviousLessons()
+    {
+        try
+        {
+            // Get list of lessons from DB
+            List<Models.Lesson> lessons = context.Lessons.ToList();
+            List<DTO.Lesson> dtoLessons = new List<DTO.Lesson>();
+
+            foreach (Models.Lesson l in lessons)
+            {
+                // Check if the lesson exists and the date has passed
+                //if(l.DidExist == true && l.DateOfLesson < DateTime.Now)
+                //{
+                //    dtoLessons.Add(new DTO.Lesson(l));
+                //}
+
+                // Check if the date has passed
+                if (l.DateOfLesson < DateTime.Now)
+                {
+                    dtoLessons.Add(new DTO.Lesson(l));
+                }
+            }
+
+            return Ok(dtoLessons);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    [HttpGet("getFutureLessons")]
+    public IActionResult GetFutureLessons()
+    {
+        try
+        {
+            // Get list of lessons from DB
+            List<Models.Lesson> lessons = context.Lessons.ToList();
+            List<DTO.Lesson> dtoLessons = new List<DTO.Lesson>();
+
+            foreach (Models.Lesson l in lessons)
+            {
+                // Check if the lesson exists and the date has passed
+                //if(l.DidExist == true && l.DateOfLesson < DateTime.Now)
+                //{
+                //    dtoLessons.Add(new DTO.Lesson(l));
+                //}
+
+                // Check if the date has passed
+                if (l.DateOfLesson > DateTime.Now)
+                {
+                    dtoLessons.Add(new DTO.Lesson(l));
+                }
+            }
+
+            return Ok(dtoLessons);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    #endregion
 
     // פעולה שמחזירה רשימה של המנהלים - כל מנהל הוא בבית ספר אחר
     [HttpGet("getSchools")]
@@ -655,6 +719,7 @@ public class DrivingSchoolAPIController : ControllerBase
                 return BadRequest(ex.Message);
             }
         }
+
     #region Approving Teachers
     [HttpGet("showPendingTeachers")]
             public IActionResult ShowPendingTeachers(int ManagerId)

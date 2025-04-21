@@ -157,6 +157,9 @@ SELECT * FROM Teacher
 
 INSERT INTO Package(ManagerID, Title, TheText)
 VALUES(1, 'Package number 1', '100 for 5 lessons')
+INSERT INTO Package(ManagerID, Title, TheText)
+VALUES(2, 'Package number 1', '100 for 5 lessons')
+
 SELECT * FROM Package
 
 INSERT INTO Student(FirstName,LastName,SchoolName,StudentStatus, StudentEmail, StudentPass,StudentLanguage, DateOfTheory,TeacherID,  LengthOfLesson, DrivingTechnic, Gender, StudentId, DateOfBirth, PhoneNumber, CurrentLessonNum, InternalTestDone, StudentAddress, PackageID)
@@ -165,8 +168,14 @@ INSERT INTO Student(FirstName,LastName,SchoolName,StudentStatus, StudentEmail, S
 VALUES('Maayan', 'Kisluk', 'Ramon',1, 'Maayan@gmail.com', 'Maayan123', 'hebrow', '11-FEB-2025',1, 10, 'autumat', 'Female', '000000000', '11-FEB-2007', '0000000000', 0,  1, 'herzog', 1)
 SELECT * FROM Student
 
+INSERT INTO HomePage(HomePageText, UpdateTime)
+VALUES('ניסיון אחד עמוד בית','21-APR-2025')
 
-
+INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,DidExist)
+VALUES('11-FEB-2025', 1,1,'Golda','Stav',1)
+INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,DidExist)
+VALUES('12-AUG-2025', 1,1,'Galgal Hamazalot', 'Galgal Hamazalot', 1)
+SELECT * FROM Lesson
 
 -- Create a login for the admin user
 CREATE LOGIN [DrivingSchoolAdminLogin] WITH PASSWORD = 'thePassword';
