@@ -572,8 +572,8 @@ public class DrivingSchoolAPIController : ControllerBase
     #endregion
 
     #region Lessons
-    [HttpGet("getPreviousLessons")]
-    public IActionResult GetPreviousLessons()
+    [HttpGet("getStudentPreviousLessons")]
+    public IActionResult GetStudentPreviousLessons([FromQuery] int StudentId)
     {
         try
         {
@@ -590,7 +590,7 @@ public class DrivingSchoolAPIController : ControllerBase
                 //}
 
                 // Check if the date has passed
-                if (l.DateOfLesson < DateTime.Now)
+                if (l.DateOfLesson < DateTime.Now && l.StudentId == StudentId)
                 {
                     dtoLessons.Add(new DTO.Lesson(l));
                 }
@@ -621,7 +621,6 @@ public class DrivingSchoolAPIController : ControllerBase
                 //}
 
                 // Check if the date has passed
-                if (l.DateOfLesson > DateTime.Now)
                 {
                     dtoLessons.Add(new DTO.Lesson(l));
                 }
@@ -634,6 +633,39 @@ public class DrivingSchoolAPIController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet("getTeacherPreviousLessons")]
+    public IActionResult GetTeacherPreviousLessons([FromQuery] int TeacherId)
+    {
+        try
+        {
+            // Get list of lessons from DB
+            List<Models.Lesson> lessons = context.Lessons.ToList();
+            List<DTO.Lesson> dtoLessons = new List<DTO.Lesson>();
+
+            foreach (Models.Lesson l in lessons)
+            {
+                // Check if the lesson exists and the date has passed
+                //if(l.DidExist == true && l.DateOfLesson < DateTime.Now)
+                //{
+                //    dtoLessons.Add(new DTO.Lesson(l));
+                //}
+
+                // Check if the date has passed
+                if (l.DateOfLesson < DateTime.Now && l.TeacherId == TeacherId)
+                {
+                    dtoLessons.Add(new DTO.Lesson(l));
+                }
+            }
+
+            return Ok(dtoLessons);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     #endregion
 
     // פעולה שמחזירה רשימה של המנהלים - כל מנהל הוא בבית ספר אחר
