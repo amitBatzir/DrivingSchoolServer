@@ -14,6 +14,12 @@ public partial class DrivingSchoolDbContext : DbContext
     {
         return this.Teachers.Where(t => t.TeacherEmail == email).FirstOrDefault();
     }
+
+    public Teacher? GetTeacherWithLessons(string email)
+    {
+        return this.Teachers.Include(t => t.Lessons).ThenInclude(l => l.Student).Where(t => t.TeacherEmail == email).FirstOrDefault();
+    }
+
     public Manager? GetManager(string email)
     {
         return this.Managers.Where(m => m.ManagerEmail == email).FirstOrDefault();

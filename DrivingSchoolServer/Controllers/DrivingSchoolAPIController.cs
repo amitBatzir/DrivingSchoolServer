@@ -3,6 +3,7 @@ using DrivingSchoolServer.Models;
 using DrivingSchoolServer.DTO;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 namespace DrivingSchoolServer.Controllers;
 
 [Route("api")]
@@ -572,6 +573,46 @@ public class DrivingSchoolAPIController : ControllerBase
     #endregion
 
     #region Lessons
+    [HttpGet("getTeacherLessons")]
+    public IActionResult GetTeacherLessons()
+    {
+        try
+        {
+            //Check if teacher is logged in
+            string? teacherEmail = HttpContext.Session.GetString("loggedInTeacher");
+            if (teacherEmail == null) 
+            {
+                return Unauthorized();
+            }
+
+            //Get Teacher with lewssons
+            Models.Teacher? t = context.GetTeacherWithLessons(teacherEmail);
+
+            if (t == null)
+            {
+                return Unauthorized();
+            }
+
+            // Get list of lessons
+            List<Models.Lesson> lessons = t.Lessons.ToList();
+            List<DTO.Lesson> dtoLessons = new List<DTO.Lesson>();
+
+            foreach (Models.Lesson l in lessons)
+            {
+                if (l.StatusId < 4) //Show only non cancelled and non declined lessons
+                {
+                    dtoLessons.Add(new DTO.Lesson(l));
+                }
+            }
+
+            return Ok(dtoLessons);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpGet("getStudentPreviousLessons")]
     public IActionResult GetStudentPreviousLessons([FromQuery] int StudentId)
     {

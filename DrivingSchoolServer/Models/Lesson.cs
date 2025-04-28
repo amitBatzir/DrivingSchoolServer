@@ -28,7 +28,11 @@ public partial class Lesson
     [StringLength(50)]
     public string DropOffLoc { get; set; } = null!;
 
-    public bool DidExist { get; set; }
+    public int StatusId { get; set; }
+
+    [ForeignKey("StatusId")]
+    [InverseProperty("Lessons")]
+    public virtual LessonStatus Status { get; set; } = null!;
 
     [ForeignKey("StudentId")]
     [InverseProperty("Lessons")]

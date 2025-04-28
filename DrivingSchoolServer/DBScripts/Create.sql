@@ -16,6 +16,18 @@ StatusID int Primary Key Identity(1,1),
 StatusDescription nvarchar(50) Not Null,
 )
 
+Create Table LessonStatuses 
+(
+StatusID int Primary Key,
+StatusDescription nvarchar(50) Not Null,
+)
+
+INSERT INTO LessonStatuses VALUES (1, N'Pending')
+INSERT INTO LessonStatuses VALUES (2, N'Scheduled')
+INSERT INTO LessonStatuses VALUES (3, N'Done')
+INSERT INTO LessonStatuses VALUES (4, N'Declined')
+INSERT INTO LessonStatuses VALUES (5, N'Canceled')
+
 Create Table Manager
 (
 UserManagerID int Primary Key Identity(1,1),
@@ -121,7 +133,8 @@ StudentID int Not Null Foreign Key References Student(UserStudentId),
 TeacherID int Not Null Foreign Key References Teacher(UserTeacherId),
 PickUpLoc nvarchar(50) Not Null,
 DropOffLoc nvarchar(50) Not Null,
-DidExist bit Not Null Default 1,
+StatusId int Not Null Foreign Key References LessonStatuses(StatusId),
+
 )
 
 Create Table HomePage 
@@ -171,10 +184,10 @@ SELECT * FROM Student
 INSERT INTO HomePage(HomePageText, UpdateTime)
 VALUES('ניסיון אחד עמוד בית','21-APR-2025')
 
-INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,DidExist)
+INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[StatusId])
 VALUES('11-FEB-2025', 1,1,'Golda','Stav',1)
-INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,DidExist)
-VALUES('12-AUG-2025', 1,1,'Galgal Hamazalot', 'Galgal Hamazalot', 1)
+INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[StatusId])
+VALUES('12-AUG-2025', 1,1,'Galgal Hamazalot', 'Galgal Hamazalot', 2)
 SELECT * FROM Lesson
 
 -- Create a login for the admin user

@@ -11,7 +11,8 @@ namespace DrivingSchoolServer.DTO
         public int TeacherId { get; set; }
         public string PickUpLoc { get; set; } = null!;
         public string DropOffLoc { get; set; } = null!;
-        public bool DidExist { get; set; }
+        public int StatusId { get; set; }
+        public Student? Student { get; set; }
         public Lesson() { }
         public Lesson(Models.Lesson l)
         {
@@ -21,7 +22,11 @@ namespace DrivingSchoolServer.DTO
             TeacherId = l.TeacherId;
             PickUpLoc = l.PickUpLoc;
             DropOffLoc = l.DropOffLoc;
-            DidExist = l.DidExist;           
+            StatusId = l.StatusId;  
+            if (l.Student != null)
+            {
+                Student = new Student(l.Student);
+            }
         }
 
         public Models.Lesson GetModel()
@@ -33,9 +38,16 @@ namespace DrivingSchoolServer.DTO
             l.TeacherId = TeacherId;
             l.PickUpLoc = PickUpLoc;
             l.DropOffLoc = DropOffLoc;
-            l.DidExist = DidExist;
+            l.StatusId = StatusId;
             return l;
         }
 
+    }
+
+    public class LessonStatuses
+    {
+        public int StatusId { get; set; }
+
+        public string StatusDescription { get; set; } = null!;
     }
 }
