@@ -582,7 +582,7 @@ public class DrivingSchoolAPIController : ControllerBase
             string? teacherEmail = HttpContext.Session.GetString("loggedInTeacher");
             if (teacherEmail == null) 
             {
-                return Unauthorized();
+                return GetTeacherLessonsByStudent();
             }
 
             //Get Teacher with lewssons
@@ -591,6 +591,56 @@ public class DrivingSchoolAPIController : ControllerBase
             if (t == null)
             {
                 return Unauthorized();
+            }
+
+            // Get list of lessons
+            List<Models.Lesson> lessons = t.Lessons.ToList();
+            List<DTO.Lesson> dtoLessons = new List<DTO.Lesson>();
+
+            foreach (Models.Lesson l in lessons)
+            {
+                if (l.StatusId < 4) //Show only non cancelled and non declined lessons
+                {
+                    dtoLessons.Add(new DTO.Lesson(l));
+                }
+            }
+
+            return Ok(dtoLessons);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("getTeacherLessonsByStudent")]
+    public IActionResult GetTeacherLessonsByStudent()
+    {
+        try
+        {
+            //Check if student is logged in
+            string? studentEmail = HttpContext.Session.GetString("loggedInStudent");
+            if (studentEmail == null)
+            {
+                return Unauthorized();
+            }
+
+            //Get Student
+            Models.Student? student = context.GetStudent(studentEmail);
+            if(student == null)
+            {
+                return Unauthorized();
+            }
+
+            int teacherId = student.TeacherId;
+
+
+            //Get Teacher with lewssons
+            Models.Teacher? t = context.GetTeacherWithLessons(teacherId);
+
+            if (t == null)
+            {
+                return BadRequest();
             }
 
             // Get list of lessons

@@ -20,6 +20,11 @@ public partial class DrivingSchoolDbContext : DbContext
         return this.Teachers.Include(t => t.Lessons).ThenInclude(l => l.Student).Where(t => t.TeacherEmail == email).FirstOrDefault();
     }
 
+    public Teacher? GetTeacherWithLessons(int  id)
+    {
+        return this.Teachers.Include(t => t.Lessons).ThenInclude(l => l.Student).Where(t => t.UserTeacherId == id).FirstOrDefault();
+    }
+
     public Manager? GetManager(string email)
     {
         return this.Managers.Where(m => m.ManagerEmail == email).FirstOrDefault();
