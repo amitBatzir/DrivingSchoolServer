@@ -32,6 +32,37 @@ public class DrivingSchoolAPIController : ControllerBase
         return Ok("Server Responded Successfully");
     }
 
+    #region Add Lesson
+    [HttpPost("AddLesson")]
+    public IActionResult AddLesson([FromBody] DTO.Lesson lessonDto)
+    {
+        try
+        {
+            //Check if who is logged in
+            string? email = HttpContext.Session.GetString("loggedInStudent");
+            if (string.IsNullOrEmpty(email))
+            {
+                return Unauthorized("המשתמש לא מחובר");
+            }
+
+
+            Models.Lesson l = lessonDto.GetModel();
+
+            context.Entry(l).State = EntityState.Added;
+
+            context.SaveChanges();
+
+            //Task was updated!
+            return Ok(l);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+    #endregion
+
     #region login
     [HttpPost("login")]
     public IActionResult Login([FromBody] DTO.LoginInfo loginDto)
@@ -166,18 +197,51 @@ public class DrivingSchoolAPIController : ControllerBase
         }
     }
 
-    [HttpGet("getAllStudents")]
-    public IActionResult GetAllStudents()
+    [HttpGet("getAllStudentsOfSchool")]
+    public IActionResult GetAllStudentsOfSchool()
     {
         try
         {
+            //Check if teacher is logged in
+            string? email = HttpContext.Session.GetString("loggedInTeacher");
+            int manId = 0;
+            Models.Teacher? t = null;
+
+            if (email != null)
+            {
+                t = context.Teachers.Where(tt => tt.TeacherEmail == email).FirstOrDefault();
+                if (t == null)
+                    return BadRequest();
+                manId = t.ManagerId;
+            }
+            else
+            {
+                email = HttpContext.Session.GetString("loggedInManager");
+                if (email == null)
+                {
+                    return Unauthorized();
+                }
+                else
+                {
+                    Models.Manager? m = context.Managers.Where(mm => mm.ManagerEmail == email).FirstOrDefault();
+                    if (m == null)
+                        return BadRequest();
+                    manId = m.UserManagerId;
+                }
+            }
+
+            if (manId == 0)
+                return Unauthorized();
+
             //Get list of students from DB
-            List<Models.Student> students = context.Students.ToList();
+            List<Models.Student> students = context.Students.Include(s=>s.Teacher).ToList();
             List<DTO.Student> dtoStudents = new List<DTO.Student>();
 
             foreach (Models.Student s in students)
             {
-                if(s.StudentStatus == 2)
+                if(s.StudentStatus == 2 && 
+                    ((t == null && s.Teacher.ManagerId == manId) || //check if the logged in user is manager and the student belong to a teacher from this school
+                    (t != null && t.UserTeacherId == s.TeacherId))) //check if the logged in user is teahcer and the student belog to him
                 {
                     dtoStudents.Add(new DTO.Student(s));
                 }
