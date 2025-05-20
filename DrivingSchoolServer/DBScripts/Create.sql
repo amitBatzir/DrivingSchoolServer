@@ -23,7 +23,7 @@ StatusDescription nvarchar(50) Not Null,
 )
 
 INSERT INTO LessonStatuses VALUES (1, N'Pending')
-INSERT INTO LessonStatuses VALUES (2, N'Scheduled')
+INSERT INTO LessonStatuses VALUES (2, N'Approved')
 INSERT INTO LessonStatuses VALUES (3, N'Done')
 INSERT INTO LessonStatuses VALUES (4, N'Declined')
 INSERT INTO LessonStatuses VALUES (5, N'Canceled')
@@ -187,7 +187,9 @@ INSERT INTO HomePage(HomePageText, UpdateTime)
 VALUES('ניסיון אחד עמוד בית','21-APR-2025')
 
 INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[StatusId])
-VALUES('11-FEB-2025', 1,1,'Golda','Stav',1)
+VALUES('11-JUN-2025 09:00', 1,1,'Golda','Stav',1)
+INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[StatusId])
+VALUES('11-FEB-2025', 2,1,'Golda','Stav',1)
 INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[StatusId])
 VALUES('12-AUG-2025', 1,1,'Galgal Hamazalot', 'Galgal Hamazalot', 2)
 SELECT * FROM Lesson

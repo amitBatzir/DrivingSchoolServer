@@ -63,6 +63,71 @@ public class DrivingSchoolAPIController : ControllerBase
     }
     #endregion
 
+
+    [HttpGet("approvingLessons")]
+    public IActionResult ApprovingLessons([FromQuery] int lessonId)
+    {
+        try
+        {
+            Models.Lesson? l = context.Lessons.Where(ll => ll.LessonId == lessonId).FirstOrDefault();
+            if (l == null)
+                return BadRequest("No Such lesson ID");
+            l.StatusId = 2;
+            context.Update(l);
+            context.SaveChanges();
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+
+    [HttpGet("decliningLessons")]
+    public IActionResult DecliningLessons([FromQuery] int lessonId)
+    {
+        try
+        {
+            Models.Lesson? l = context.Lessons.Where(ll => ll.LessonId == lessonId).FirstOrDefault();
+            if (l == null)
+                return BadRequest("No Such lesson ID");
+            l.StatusId = 4;
+            context.Update(l);
+            context.SaveChanges();
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+
+
+
+    [HttpGet("decliningTeacher")]
+    public IActionResult DecliningTeacher([FromQuery] int TeacherId)
+    {
+        try
+        {
+            Models.Teacher? t = context.Teachers.Where(tt => tt.UserTeacherId == TeacherId).FirstOrDefault();
+            if (t == null)
+                return BadRequest("No Such Teacher ID");
+            t.TeacherStatus = 3;
+            context.Update(t);
+            context.SaveChanges();
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     #region login
     [HttpPost("login")]
     public IActionResult Login([FromBody] DTO.LoginInfo loginDto)
