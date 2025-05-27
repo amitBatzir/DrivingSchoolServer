@@ -7,16 +7,16 @@ namespace DrivingSchoolServer.DTO
         public int StatusId { get; set; }
         public string StatusDescription { get; set; } = null!;
         public Status() { }
-        public Status(Models.Status s)
+        public Status(Models.S s)
         {
             StatusId = s.StatusId;
             StatusDescription = s.StatusDescription;
          
         }
 
-        public Models.Status GetModel()
+        public Models.S GetModel()
         {
-            Models.Status s = new Models.Status();
+            Models.S s = new Models.S();
             s.StatusId = StatusId;
             s.StatusDescription = StatusDescription;
             return s;

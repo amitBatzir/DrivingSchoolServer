@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DrivingSchoolServer.Models.DrivingSchoolDbContext" Collapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAIABAAEQQAQAIAEEAAgAAAAkAAAAQABAABQAgAAIAA=</HashCode>
+      <FileName>Models\DrivingSchoolDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrivingSchoolServer.Models.Lesson">
+    <Position X="7" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAEMQAAAAEAAAAAACAAAAAABAAABAAAAAAACAAA=</HashCode>
+      <FileName>Models\Lesson.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Student" />
+      <Property Name="Status" />
+      <Property Name="Teacher" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DrivingSchoolServer.Models.Student">
+    <Position X="5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UkGIAGAEAACAAACAAAAQSQIAEBAQAACAAAAwAAACIAw=</HashCode>
+      <FileName>Models\Student.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Teacher" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Lessons" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DrivingSchoolServer.Models.TeacherSchedule">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAgAAAAAAAABAAAAACAAAAAAAAAAAhAAAAAAAAAI=</HashCode>
+      <FileName>Models\TeacherSchedule.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Teacher" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DrivingSchoolServer.Models.Teacher">
+    <Position X="9" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UgIAAGAAAKAAAACAAABISAAAIAAABQAAAAAQgAAAAAg=</HashCode>
+      <FileName>Models\Teacher.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Manager" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Students" />
+      <Property Name="Lessons" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DrivingSchoolServer.Models.S">
+    <Position X="7.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAgAIAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Models\Status.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Teachers" />
+      <Property Name="Students" />
+      <Property Name="Managers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DrivingSchoolServer.Models.Manager">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>cAAAAGAAAAAAAIAICAAIAQIAIAgAQAAAAAAAAgAAIAg=</HashCode>
+      <FileName>Models\Manager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Teachers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DrivingSchoolServer.Models.LessonStatus">
+    <Position X="9.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAIAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Models\LessonStatus.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Lessons" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

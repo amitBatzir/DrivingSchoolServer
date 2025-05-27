@@ -27,7 +27,7 @@ public partial class DrivingSchoolDbContext : DbContext
 
     public virtual DbSet<Package> Packages { get; set; }
 
-    public virtual DbSet<Status> Statuses { get; set; }
+    public virtual DbSet<S> Statuses { get; set; }
 
     public virtual DbSet<Student> Students { get; set; }
 
@@ -98,7 +98,7 @@ public partial class DrivingSchoolDbContext : DbContext
                 .HasConstraintName("FK__Package__Manager__2C3393D0");
         });
 
-        modelBuilder.Entity<Status>(entity =>
+        modelBuilder.Entity<S>(entity =>
         {
             entity.HasKey(e => e.StatusId).HasName("PK__Statuses__C8EE204344B0ADB3");
         });

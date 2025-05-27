@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DrivingSchoolServer.Models;
 
-public partial class Status
+public partial class S
 {
     [Key]
     [Column("StatusID")]

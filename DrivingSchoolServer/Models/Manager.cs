@@ -52,7 +52,7 @@ public partial class Manager
 
     [ForeignKey("ManagerStatus")]
     [InverseProperty("Managers")]
-    public virtual Status ManagerStatusNavigation { get; set; } = null!;
+    public virtual S ManagerStatusNavigation { get; set; } = null!;
 
     [InverseProperty("Manager")]
     public virtual ICollection<Package> Packages { get; set; } = new List<Package>();

@@ -82,7 +82,7 @@ public partial class Student
 
     [ForeignKey("StudentStatus")]
     [InverseProperty("Students")]
-    public virtual Status StudentStatusNavigation { get; set; } = null!;
+    public virtual S StudentStatusNavigation { get; set; } = null!;
 
     [ForeignKey("TeacherId")]
     [InverseProperty("Students")]
