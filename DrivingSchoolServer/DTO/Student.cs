@@ -16,7 +16,6 @@ namespace DrivingSchoolServer.DTO
         public bool DoneTheoryTest { get; set; }
         public DateTime DateOfTheory { get; set; }
         public int LengthOfLesson { get; set; }
-        public bool HaveDocuments { get; set; }
         public int TeacherId { get; set; }
         public string DrivingTechnic { get; set; } = null!;
         public string Gender { get; set; } = null!;
