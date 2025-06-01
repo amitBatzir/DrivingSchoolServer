@@ -1078,4 +1078,87 @@ public class DrivingSchoolAPIController : ControllerBase
         }
     }
     #endregion
+
+
+
+    #region Pending Lessons
+    [HttpGet("ShowPendingLessons")]
+    public IActionResult ShowPendingLessons()
+    {
+        try
+        {
+            //Check if teacher is logged in
+            string? teacherEmail = HttpContext.Session.GetString("loggedInTeacher");
+            if (teacherEmail == null)
+            {
+                return GetTeacherLessonsByStudent();
+            }
+
+            //Get Teacher with lewssons
+            Models.Teacher? t = context.GetTeacherWithLessons(teacherEmail);
+
+            if (t == null)
+            {
+                return Unauthorized();
+            }
+
+            // Get list of lessons
+            List<Models.Lesson> lessons = t.Lessons.ToList();
+            List<DTO.Lesson> dtoLessons = new List<DTO.Lesson>();
+
+            foreach (Models.Lesson l in lessons)
+            {
+                if (l.StatusId == 1) //Show only pending lessons
+                {
+                    dtoLessons.Add(new DTO.Lesson(l));
+                }
+            }
+
+            return Ok(dtoLessons);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("ApprovingLesson")]
+    public IActionResult ApprovingLesson([FromQuery] int lessonId)
+    {
+        try
+        {
+            Models.Lesson? l = context.Lessons.Where(LL => LL.LessonId == lessonId).FirstOrDefault();
+            if ( l== null)
+                return BadRequest("No Such lesson ID");
+           l.StatusId = 2;
+            context.Update(l);
+            context.SaveChanges();
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    [HttpGet("DecliningLesson")]
+    public IActionResult DecliningLesson([FromQuery] int LessonId)
+    {
+        try
+        {
+            Models.Lesson? l = context.Lessons.Where(ll => ll.LessonId == LessonId).FirstOrDefault();
+            if (l == null)
+                return BadRequest("No Such lessons ID");
+           l.StatusId = 4;
+            context.Update(l);
+            context.SaveChanges();
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    #endregion
 }

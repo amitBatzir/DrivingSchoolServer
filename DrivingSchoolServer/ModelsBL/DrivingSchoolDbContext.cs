@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DrivingSchoolServer.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace DrivingSchoolServer.Models;
@@ -23,6 +24,10 @@ public partial class DrivingSchoolDbContext : DbContext
     public Teacher? GetTeacherWithLessons(int  id)
     {
         return this.Teachers.Include(t => t.Lessons).ThenInclude(l => l.Student).Where(t => t.UserTeacherId == id).FirstOrDefault();
+    }
+    public Lesson? GetLessonWithStudent(int id)
+    {
+        return this.Lessons.Include(l => l.Student).Where(l=> l.LessonId == id).FirstOrDefault();
     }
 
     public Manager? GetManager(string email)

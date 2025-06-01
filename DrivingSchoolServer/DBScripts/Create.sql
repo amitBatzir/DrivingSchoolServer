@@ -186,12 +186,15 @@ SELECT * FROM Student
 INSERT INTO HomePage(HomePageText, UpdateTime)
 VALUES('ניסיון אחד עמוד בית','21-APR-2025')
 
+
 INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[StatusId])
-VALUES('11-JUN-2025 09:00', 1,1,'Golda','Stav',1)
+VALUES('10-JUN-2025 09:00', 1,1,'ramon','ramon',1)
 INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[StatusId])
-VALUES('11-FEB-2025', 2,1,'Golda','Stav',1)
+VALUES('24-AUG-2025 10:00', 2,1,'Golda','Stav',1)
 INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[StatusId])
-VALUES('12-AUG-2025', 1,1,'Galgal Hamazalot', 'Galgal Hamazalot', 2)
+VALUES('5-JUL-2025 8:00', 2,1,'herzel','herzel',2)
+INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[StatusId])
+VALUES('5-JUL-2025 9:00', 1,1,'golda','golda',2)
 SELECT * FROM Lesson
 
 -- Create a login for the admin user
