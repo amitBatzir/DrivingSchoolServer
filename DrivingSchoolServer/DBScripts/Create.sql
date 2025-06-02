@@ -171,8 +171,9 @@ SELECT * FROM Teacher
 INSERT INTO Package(ManagerID, Title, TheText)
 VALUES(1, 'Package number 1', '100 for 5 lessons')
 INSERT INTO Package(ManagerID, Title, TheText)
-VALUES(2, 'Package number 1', '100 for 5 lessons')
-
+VALUES(1, 'Package number 2', '200 for 5 lessons')
+INSERT INTO Package(ManagerID, Title, TheText)
+VALUES(1, 'Package number 3', '1 for 5 lessons')
 SELECT * FROM Package
 
 INSERT INTO Student(FirstName,LastName,SchoolName,StudentStatus, StudentEmail, StudentPass,StudentLanguage, DateOfTheory,TeacherID,  LengthOfLesson, DrivingTechnic, Gender, StudentId, DateOfBirth, PhoneNumber, CurrentLessonNum, InternalTestDone, StudentAddress, PackageID)
@@ -195,6 +196,10 @@ INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[Status
 VALUES('5-JUL-2025 8:00', 2,1,'herzel','herzel',2)
 INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[StatusId])
 VALUES('5-JUL-2025 9:00', 1,1,'golda','golda',2)
+INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[StatusId])
+VALUES('12-DEC-2024 9:00', 1,1,'stav','stav',2)
+INSERT INTO Lesson(DateOfLesson,StudentID,TeacherID,PickUpLoc,DropOffLoc,[StatusId])
+VALUES('12-DEC-2024 9:00',2,1,'haimHerzog','haimHerzog',2)
 SELECT * FROM Lesson
 
 -- Create a login for the admin user

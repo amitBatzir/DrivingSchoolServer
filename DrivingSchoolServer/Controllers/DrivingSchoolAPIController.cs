@@ -33,9 +33,10 @@ public class DrivingSchoolAPIController : ControllerBase
     }
 
     #region Add Lesson
-    [HttpPost("AddLesson")]
+    [HttpPost("addLesson")]
     public IActionResult AddLesson([FromBody] DTO.Lesson lessonDto)
     {
+      
         try
         {
             //Check if who is logged in
@@ -44,7 +45,6 @@ public class DrivingSchoolAPIController : ControllerBase
             {
                 return Unauthorized("המשתמש לא מחובר");
             }
-
 
             Models.Lesson l = lessonDto.GetModel();
 
@@ -104,6 +104,48 @@ public class DrivingSchoolAPIController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    #region Packages 
+    [HttpPost("UpdatePackage")]
+    public IActionResult UpdatePackage([FromBody] DTO.Package PackageDto)
+    {
+        try
+        {
+            //Check if who is logged in
+            string? ManagerEmail = HttpContext.Session.GetString("loggedInManager");
+            if (string.IsNullOrEmpty(ManagerEmail))
+            {
+                return Unauthorized("המשתמש לא מחובר");
+            }
+
+            //Get model user class from DB with matching email. 
+            Models.Manager? manager = context.GetManager(ManagerEmail);
+            //Clear the tracking of all objects to avoid double tracking
+            context.ChangeTracker.Clear();
+
+            //Check if the user that is logged in is the same user of the task
+            //this situation is ok only if the user is a manager
+            if (manager == null || (PackageDto.ManagerId != manager.UserManagerId))
+            {
+                return Unauthorized("המשתמש מנסה לעדכן חבילה של בית ספר אחר");
+            }
+
+            Models.Package p = PackageDto.GetModel();
+
+            context.Entry(p).State = EntityState.Modified;
+
+            context.SaveChanges();
+
+            //Task was updated!
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+    #endregion
 
     #region login
     [HttpPost("login")]
@@ -595,7 +637,6 @@ public class DrivingSchoolAPIController : ControllerBase
         {
             return BadRequest(ex.Message);
         }
-
     }
 
     [HttpPost("updateTeacher")]
@@ -803,6 +844,18 @@ public class DrivingSchoolAPIController : ControllerBase
     [HttpGet("getFutureLessons")]
     public IActionResult GetFutureLessons()
     {
+        string? studentEmail = HttpContext.Session.GetString("loggedInStudent");
+        if (studentEmail == null)
+        {
+            return Unauthorized();
+        }
+
+        //Get Student
+        Models.Student? student = context.GetStudent(studentEmail);
+        if (student == null)
+        {
+            return Unauthorized();
+        }
         try
         {
             // Get list of lessons from DB
@@ -818,9 +871,12 @@ public class DrivingSchoolAPIController : ControllerBase
                 //}
 
                 // Check if the date has passed
-                {
-                    dtoLessons.Add(new DTO.Lesson(l));
+                if(l.StudentId==student.UserStudentId && l.DateOfLesson > DateTime.Now)
+                {                  
+                     dtoLessons.Add(new DTO.Lesson(l));
+                   
                 }
+                
             }
 
             return Ok(dtoLessons);
@@ -864,6 +920,7 @@ public class DrivingSchoolAPIController : ControllerBase
     }
 
     #endregion
+
 
     // פעולה שמחזירה רשימה של המנהלים - כל מנהל הוא בבית ספר אחר
     [HttpGet("getSchools")]

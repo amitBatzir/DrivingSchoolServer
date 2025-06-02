@@ -20,6 +20,7 @@ public partial class DrivingSchoolDbContext : DbContext
     {
         return this.Teachers.Include(t => t.Lessons).ThenInclude(l => l.Student).Where(t => t.TeacherEmail == email).FirstOrDefault();
     }
+    
 
     public Teacher? GetTeacherWithLessons(int  id)
     {
