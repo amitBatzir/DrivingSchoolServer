@@ -145,6 +145,39 @@ public class DrivingSchoolAPIController : ControllerBase
         }
 
     }
+
+
+    #region Add Lesson
+    [HttpPost("addpackage")]
+    public IActionResult addpackage([FromBody] DTO.Package packageDto)
+    {
+
+        try
+        {
+            //Check if who is logged in
+            string? email = HttpContext.Session.GetString("loggedInManager");
+            if (string.IsNullOrEmpty(email))
+            {
+                return Unauthorized("המשתמש לא מחובר");
+            }
+
+            Models.Package p= packageDto.GetModel();
+
+            context.Entry(p).State = EntityState.Added;
+
+            context.SaveChanges();
+
+            //Task was updated!
+            return Ok(p);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+    #endregion
+
     #endregion
 
     #region login
