@@ -370,6 +370,70 @@ public class DrivingSchoolAPIController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet("approvingManager")]
+    public IActionResult approvingManager([FromQuery] int managerId)
+    {
+        try
+        {
+            Models.Manager? m = context.Managers.Where(mm => mm.UserManagerId == managerId).FirstOrDefault();
+            if (m == null)
+                return BadRequest("No Such manager ID");
+            m.ManagerStatus = 2;
+            context.Update(m);
+            context.SaveChanges();
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    [HttpGet("decliningManager")]
+    public IActionResult decliningManager([FromQuery] int managerid)
+    {
+        try
+        {
+            Models.Manager? m = context.Managers.Where(mm => mm.UserManagerId == managerid).FirstOrDefault();
+            if (m == null)
+                return BadRequest("No Such manager ID");
+            m.ManagerStatus = 3;
+            context.Update(m);
+            context.SaveChanges();
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("showPendingManagers")]
+    public IActionResult showPendingManagers()
+    {
+        try
+        {
+
+            List<Models.Manager> managers = context.Managers.ToList();
+            List<DTO.Manager> dtomanager = new List<DTO.Manager>();
+
+            foreach (Models.Manager m in managers)
+            {
+                if (m.ManagerStatus == 1)
+                {
+                    dtomanager.Add(new DTO.Manager(m));
+                }
+
+            }
+            return Ok(dtomanager);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
     #endregion
 
     #region Photo

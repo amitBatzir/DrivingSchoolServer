@@ -156,7 +156,9 @@ SELECT * FROM Statuses
 INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
 VALUES('Itzik', 'Rotem', 'Rotem@gmail.com', '123', 2, '234567890', 'Golda Meir', '0537786549', '03456789', 'Ramon')
 INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
-VALUES('Amit', 'Batzir', 'Amit@gmail.com', 'A123', 2, '234567890', 'Golda Meir', '0537786549', '03456789', 'Tov')
+VALUES('Shahar', 'Batzir', 'S@gmail.com', 's123', 2, '217328566', 'Golda Meir', '0537786549', '03456789', 'Tov')
+INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
+VALUES('Amit', 'Batzir', 'Amit@driverseat.com', 'manager12', 2, '217328574', 'Golda Meir', '0537786549', '03456789', 'App')
 SELECT * FROM Manager
 
 
