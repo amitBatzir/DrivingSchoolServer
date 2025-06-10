@@ -163,7 +163,10 @@ public class DrivingSchoolAPIController : ControllerBase
 
             Models.Package p= packageDto.GetModel();
 
-            context.Entry(p).State = EntityState.Added;
+            if (p.PackageId == 0)
+                context.Entry(p).State = EntityState.Added;
+            else
+                context.Entry(p).State = EntityState.Modified;
 
             context.SaveChanges();
 
@@ -1025,8 +1028,7 @@ public class DrivingSchoolAPIController : ControllerBase
         {
             try
             {
-                HttpContext.Session.Clear(); //Logout any previous login attempt
-
+                
                 //Get list of schools from DB
                 List<Models.Manager> managers = context.Managers.ToList();
                 List<DTO.Manager> dtoManagers = new List<DTO.Manager>();
@@ -1053,8 +1055,7 @@ public class DrivingSchoolAPIController : ControllerBase
         {
             try
             {
-                HttpContext.Session.Clear(); //Logout any previous login attempt
-
+                
                 //Get list of teac from DB
                 List<Models.Teacher> teachers = context.Teachers.ToList();
                 List<DTO.Teacher> dtosTeachers = new List<DTO.Teacher>();
@@ -1081,8 +1082,7 @@ public class DrivingSchoolAPIController : ControllerBase
         {
             try
             {
-                HttpContext.Session.Clear(); //Logout any previous login attempt
-
+                
                 //Get list of PACKAGES  from DB
                 List<Models.Package> packages = context.Packages.ToList();
                 List<DTO.Package> dtoPackages = new List<DTO.Package>();
