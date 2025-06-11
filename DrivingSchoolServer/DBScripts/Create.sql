@@ -158,7 +158,7 @@ VALUES('Itzik', 'Rotem', 'Rotem@gmail.com', '123', 2, '234567890', 'Golda Meir',
 INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
 VALUES('Shahar', 'Batzir', 'S@gmail.com', 's123', 2, '217328566', 'Golda Meir', '0537786549', '03456789', 'Tov')
 INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
-VALUES('Amit', 'Batzir', 'Amit@driverseat.com', 'manager12', 2, '217328574', 'Golda Meir', '0537786549', '03456789', 'App')
+VALUES('Amit', 'Batzir', 'Amit@driverseat.com', 'manager12', 2, '217328574', 'Golda Meir', '0537786549', '03456789', 'AppSchool')
 INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
 VALUES('Dana', 'Batzir', 'D@gmail.com', 'd123', 1, '234567890', 'Golda Meir', '0537786549', '03456789', 'Mosinzon')
 INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
