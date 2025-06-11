@@ -159,15 +159,22 @@ INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatu
 VALUES('Shahar', 'Batzir', 'S@gmail.com', 's123', 2, '217328566', 'Golda Meir', '0537786549', '03456789', 'Tov')
 INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
 VALUES('Amit', 'Batzir', 'Amit@driverseat.com', 'manager12', 2, '217328574', 'Golda Meir', '0537786549', '03456789', 'App')
+INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
+VALUES('Dana', 'Batzir', 'D@gmail.com', 'd123', 1, '234567890', 'Golda Meir', '0537786549', '03456789', 'Mosinzon')
+INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
+VALUES('Iron', 'Batzir', 'i@gmail.com', 'i123', 1, '234567890', 'Golda Meir', '0537786549', '03456789', 'hadarim')
+INSERT INTO Manager(FirstName, LastName, ManagerEmail, ManagerPass, ManagerStatus,ManagerID, SchoolAddress,  ManagerPhone, SchoolPhone, SchoolName)
+VALUES('Noam', 'Batzir', 'n@gmail.com', 'n123', 1, '234567890', 'Golda Meir', '0537786549', '03456789', 'shikmim')
+
 SELECT * FROM Manager
 
 
 INSERT INTO Teacher(SchoolName, TeacherEmail, FirstName, LastName, TeacherPass,TeacherStatus, TeacherID,  WayToPay, PhoneNumber, Gender, ManagerID, DrivingTechnic)
-VALUES('Ramon', 'Marom@gmail.com', 'Marom', 'Hai', 'm123',2, '111111111', 'Cash', '000000000', 'female', 1, 'Autumat')
+VALUES('Ramon', 'Marom@gmail.com', 'Marom', 'Hai', 'm123',2, '111111111', 'Cash', '000000000', 'Female', 1, 'Autumat')
 INSERT INTO Teacher(SchoolName, TeacherEmail, FirstName, LastName, TeacherPass,TeacherStatus, TeacherID,  WayToPay, PhoneNumber, Gender, ManagerID, DrivingTechnic)
-VALUES('Ramon', 'Shahar@gmail.com', 'Shahar', 'Batzir', 's123',1 ,'2222222', 'Cash', '000000000', 'female', 1, 'Autumat')
+VALUES('Ramon', 'Shahar@gmail.com', 'Shahar', 'Batzir', 's123',1 ,'2222222', 'Cash', '000000000', 'Female', 1, 'Autumat')
 INSERT INTO Teacher(SchoolName, TeacherEmail, FirstName, LastName, TeacherPass,TeacherStatus, TeacherID,  WayToPay, PhoneNumber, Gender, ManagerID, DrivingTechnic)
-VALUES('Ramon', 'Gal@gmail.com', 'Gal', 'Klug', 'g123',1 ,'2223222', 'Cash', '000000000', 'female', 1, 'Autumat')
+VALUES('Ramon', 'Gal@gmail.com', 'Gal', 'Klug', 'g123',1 ,'2223222', 'Cash', '000000000', 'Female', 1, 'Autumat')
 SELECT * FROM Teacher
 
 INSERT INTO Package(ManagerID, Title, TheText)
@@ -179,11 +186,11 @@ VALUES(1, 'Package number 3', '1 for 5 lessons')
 SELECT * FROM Package
 
 INSERT INTO Student(FirstName,LastName,SchoolName,StudentStatus, StudentEmail, StudentPass,StudentLanguage, DateOfTheory,TeacherID,  LengthOfLesson, DrivingTechnic, Gender, StudentId, DateOfBirth, PhoneNumber, CurrentLessonNum, InternalTestDone, StudentAddress, PackageID)
-VALUES('Ori', 'Geva', 'Ramon',2, 'o@gmail.com', '123o', 'hebrow', '11-FEB-2025',1, 40, 'autumat', 'Male', '000000000', '11-FEB-2007', '0000000000', 0,  1, 'golsa', 1)
+VALUES('Ori', 'Geva', 'Ramon',2, 'o@gmail.com', '123o', 'hebrow', '11-FEB-2025',1, 40, 'Autumat', 'Male', '000000000', '11-FEB-2007', '0000000000', 0,  1, 'golsa', 1)
 INSERT INTO Student(FirstName,LastName,SchoolName,StudentStatus, StudentEmail, StudentPass,StudentLanguage, DateOfTheory,TeacherID,  LengthOfLesson, DrivingTechnic, Gender, StudentId, DateOfBirth, PhoneNumber, CurrentLessonNum, InternalTestDone, StudentAddress, PackageID)
-VALUES('Maayan', 'Kisluk', 'Ramon',1, 'Maayan@gmail.com', 'Maayan123', 'hebrow', '11-FEB-2025',1, 10, 'autumat', 'Female', '000000000', '11-FEB-2007', '0000000000', 0,  1, 'herzog', 1)
+VALUES('Maayan', 'Kisluk', 'Ramon',1, 'Maayan@gmail.com', 'Maayan123', 'hebrow', '11-FEB-2025',1, 10, 'Autumat', 'Female', '000000000', '11-FEB-2007', '0000000000', 0,  1, 'herzog', 1)
 INSERT INTO Student(FirstName,LastName,SchoolName,StudentStatus, StudentEmail, StudentPass,StudentLanguage, DateOfTheory,TeacherID,  LengthOfLesson, DrivingTechnic, Gender, StudentId, DateOfBirth, PhoneNumber, CurrentLessonNum, InternalTestDone, StudentAddress, PackageID)
-VALUES('Roni', 'Kalfon', 'Ramon',2, 'R@gmail.com', 'R111', 'hebrow', '11-FEB-2025',2, 10, 'autumat', 'Female', '000000000', '11-FEB-2007', '0000000000', 0,  1, 'herzog', 1)
+VALUES('Roni', 'Kalfon', 'Ramon',2, 'R@gmail.com', 'R111', 'hebrow', '11-FEB-2025',2, 10, 'Autumat', 'Female', '000000000', '11-FEB-2007', '0000000000', 0,  1, 'herzog', 1)
 SELECT * FROM Student
 
 INSERT INTO HomePage(HomePageText, UpdateTime)
